@@ -1,11 +1,16 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { MailIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function VerifyPage() {
   const t = useTranslations('auth');
+  const locale = useLocale();
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 md:p-8">
@@ -21,10 +26,19 @@ export default function VerifyPage() {
             <CardDescription className="text-base text-muted-foreground">{t('verifyEmailDescription')}</CardDescription>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <p className="text-sm text-center text-muted-foreground leading-relaxed">
             {t('checkEmailInstructions')}
           </p>
+          <div className="flex justify-center">
+            <Button
+              variant="link"
+              onClick={() => router.push(`/${locale}/auth/signin`)}
+              className="text-primary"
+            >
+              {t('backToSignIn')}
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

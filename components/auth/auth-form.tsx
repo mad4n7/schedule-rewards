@@ -74,7 +74,17 @@ export function AuthForm({ type }: AuthFormProps) {
           return null;
         });
 
-        if (!result || result.error) {
+        if (!result) {
+          setError(t('invalidCredentials'));
+          return;
+        }
+
+        if (result.error === 'Verification') {
+          setError(t('emailNotVerified'));
+          return;
+        }
+
+        if (result.error) {
           setError(t('invalidCredentials'));
           return;
         }

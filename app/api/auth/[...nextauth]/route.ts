@@ -25,36 +25,56 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('InvalidCredentials');
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error('InvalidCredentials');
+          }
+
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              password: true,
+              emailVerified: true,
+              image: true,
+            },
+          });
+
+          if (!user || !user.password) {
+            throw new Error('InvalidCredentials');
+          }
+
+          const isValid = await compare(credentials.password, user.password);
+
+          if (!isValid) {
+            throw new Error('InvalidCredentials');
+          }
+
+          console.log('Email verification status:', {
+            emailVerified: user.emailVerified,
+            isDate: user.emailVerified instanceof Date,
+            type: typeof user.emailVerified,
+            value: user.emailVerified?.toString(),
+          });
+
+          if (!user.emailVerified) {
+            throw new Error('Verification');
+          }
+
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+          };
+        } catch (error) {
+          console.error('Auth error:', error);
+          throw error;
         }
-
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
-
-        if (!user || !user.password) {
-          throw new Error('InvalidCredentials');
-        }
-
-        if (!user.emailVerified) {
-          throw new Error('Verification');
-        }
-
-        const isValid = await compare(credentials.password, user.password);
-
-        if (!isValid) {
-          throw new Error('InvalidCredentials');
-        }
-
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          image: user.image,
-        };
       },
     }),
   ],
