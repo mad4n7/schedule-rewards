@@ -93,7 +93,9 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: '/auth/signin',
+    signIn: '/[locale]/auth/signin',
+    error: '/[locale]/auth/error',
+    verifyRequest: '/[locale]/auth/verify',
   },
 };
 

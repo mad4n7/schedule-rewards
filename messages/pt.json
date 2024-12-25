@@ -34,6 +34,10 @@
     "signIn": "Entrar",
     "signUp": "Cadastrar",
     "signOut": "Sair",
+    "signedOut": "Sessão Encerrada",
+    "signOutDescription": "Você foi desconectado da sua conta com sucesso.",
+    "signOutSuccessMessage": "Obrigado por usar o Schedule & Rewards. Esperamos vê-lo novamente em breve!",
+    "backToHome": "Voltar para a página inicial",
     "email": "Email",
     "password": "Senha",
     "confirmPassword": "Confirmar Senha",
@@ -69,7 +73,18 @@
     "signIn": "Entrar",
     "verificationEmailSent": "Email de verificação enviado! Por favor, verifique sua caixa de entrada.",
     "errors": {
-      "registration": "Falha ao registrar. Por favor, tente novamente."
+      "registration": "Falha ao registrar. Por favor, tente novamente.",
+      "validation": {
+        "noRequestBody": "Nenhum dado fornecido",
+        "validationError": "Dados inválidos",
+        "userExists": "Já existe uma conta com este e-mail"
+      },
+      "server": {
+        "databaseError": "Ocorreu um erro no banco de dados. Por favor, tente novamente mais tarde",
+        "emailError": "Falha ao enviar e-mail de verificação. Por favor, tente novamente mais tarde",
+        "internalError": "Ocorreu um erro interno. Por favor, tente novamente mais tarde",
+        "userCheckError": "Não foi possível verificar a disponibilidade da conta. Por favor, tente novamente mais tarde"
+      }
     }
   },
   "profile": {

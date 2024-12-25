@@ -13,6 +13,10 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signOut": "Sign Out",
+    "signedOut": "Signed Out",
+    "signOutDescription": "You have been successfully signed out of your account.",
+    "signOutSuccessMessage": "Thank you for using Schedule & Rewards. We hope to see you again soon!",
+    "backToHome": "Back to home",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
@@ -217,5 +221,18 @@
     "title": "Page Not Found",
     "description": "The page you are looking for does not exist.",
     "backHome": "Back to Home"
+  },
+  "errors": {
+    "validation": {
+      "noRequestBody": "No request body provided",
+      "validationError": "Invalid input data",
+      "userExists": "An account with this email already exists"
+    },
+    "server": {
+      "databaseError": "A database error occurred. Please try again later",
+      "emailError": "Failed to send verification email. Please try again later",
+      "internalError": "An internal server error occurred. Please try again later",
+      "userCheckError": "Unable to verify account availability. Please try again later"
+    }
   }
 }

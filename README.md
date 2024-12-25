@@ -79,6 +79,114 @@ npx prisma migrate deploy
 npx prisma db seed
 ```
 
+## Translations
+
+This project uses `next-intl` for internationalization. All translations are stored in JSON files under the `messages` directory.
+
+### Structure
+
+```
+messages/
+  ├── en.json    # English translations
+  └── pt.json    # Portuguese translations
+```
+
+### Using Translations
+
+#### In Client Components
+
+```tsx
+'use client';
+
+import { useTranslations } from 'next-intl';
+
+export default function MyComponent() {
+  const t = useTranslations('namespace');
+  
+  return <div>{t('key')}</div>;
+}
+```
+
+#### In Server Components
+
+```tsx
+import { getTranslations } from 'next-intl/server';
+
+export default async function MyServerComponent() {
+  const t = await getTranslations('namespace');
+  
+  return <div>{t('key')}</div>;
+}
+```
+
+#### In API Routes
+
+```typescript
+import { getTranslations } from 'next-intl/server';
+
+export async function POST(req: Request) {
+  const { locale = 'en' } = await req.json();
+  const t = await getTranslations({ locale, namespace: 'namespace' });
+  
+  return Response.json({ message: t('key') });
+}
+```
+
+### Translation Files Structure
+
+The translation files follow a nested structure for better organization:
+
+```json
+{
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "errors": {
+    "validation": {
+      "required": "This field is required"
+    },
+    "server": {
+      "internalError": "An internal error occurred"
+    }
+  }
+}
+```
+
+### Adding New Translations
+
+1. Add your new translation key to `messages/en.json`
+2. Add the same key with the translated text to `messages/pt.json`
+3. Use the key in your component: `t('namespace.key')`
+
+### Best Practices
+
+1. **Namespacing**: Group related translations under meaningful namespaces (e.g., 'auth', 'profile', 'errors')
+2. **Consistency**: Use the same keys across all language files
+3. **Parameters**: For dynamic content, use parameters:
+   ```tsx
+   // In translation file
+   {
+     "welcome": "Welcome, {name}!"
+   }
+   
+   // In component
+   t('welcome', { name: user.name })
+   ```
+4. **Maintenance**: Keep translation files organized and documented
+5. **Fallbacks**: Always provide English translations as fallback
+
+### Available Languages
+
+- English (en) - Default
+- Portuguese (pt)
+
+To add a new language:
+1. Create a new file in `messages/` (e.g., `es.json` for Spanish)
+2. Copy the structure from `en.json`
+3. Translate all the strings
+4. Add the language code to the supported locales in `config/languages.ts`
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

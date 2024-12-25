@@ -5,6 +5,7 @@ import { signUpSchema } from '@/lib/validations/auth.schema';
 import { sendVerificationEmail } from '@/lib/email';
 import crypto from 'crypto';
 import { z } from 'zod';
+import { getTranslations } from 'next-intl/server';
 
 export async function POST(req: Request) {
   try {
@@ -13,17 +14,20 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log('Request body:', body);
     
+    const { locale = 'en' } = body;
+    const t = await getTranslations({ locale, namespace: 'errors' });
+    
     if (!body) {
       console.error('No request body provided');
       return NextResponse.json(
-        { error: 'No request body' },
+        { error: t('validation.noRequestBody') },
         { status: 400 }
       );
     }
 
     // Validate request body
     const validatedData = signUpSchema.parse(body);
-    const { email, password, name, locale } = validatedData;
+    const { email, password, name } = validatedData;
     console.log('Validation passed for email:', email);
 
     // Check if user exists
@@ -42,14 +46,14 @@ export async function POST(req: Request) {
       if (existingUser) {
         console.log('User already exists:', email);
         return NextResponse.json(
-          { error: 'User already exists' },
+          { error: t('validation.userExists') },
           { status: 409 }
         );
       }
     } catch (error) {
       console.error('Error checking for existing user:', error);
       return NextResponse.json(
-        { error: 'Database error occurred while checking for existing user' },
+        { error: t('server.userCheckError') },
         { status: 500 }
       );
     }
@@ -77,7 +81,7 @@ export async function POST(req: Request) {
       email,
       token: verificationToken,
       name,
-      locale: locale || 'en',
+      locale,
     });
     console.log('Verification email sent successfully');
 
@@ -91,11 +95,14 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('[REGISTER_ERROR] Full error:', error);
     
+    const locale = (await req.json())?.locale || 'en';
+    const t = await getTranslations({ locale, namespace: 'errors' });
+    
     // Handle Zod validation errors
     if (error instanceof z.ZodError) {
       console.error('Validation error:', error.errors);
       return NextResponse.json(
-        { error: 'Validation error', details: error.errors },
+        { error: t('validation.validationError'), details: error.errors },
         { status: 400 }
       );
     }
@@ -104,7 +111,7 @@ export async function POST(req: Request) {
     if (error instanceof Error && error.message.includes('Prisma')) {
       console.error('Database error:', error.message);
       return NextResponse.json(
-        { error: 'Database error occurred' },
+        { error: t('server.databaseError') },
         { status: 500 }
       );
     }
@@ -113,7 +120,7 @@ export async function POST(req: Request) {
     if (error instanceof Error && error.message.includes('Failed to send verification email')) {
       console.error('Email sending error:', error.message);
       return NextResponse.json(
-        { error: 'Failed to send verification email' },
+        { error: t('server.emailError') },
         { status: 500 }
       );
     }
@@ -121,7 +128,7 @@ export async function POST(req: Request) {
     // Generic error response
     console.error('Unhandled error:', error);
     return NextResponse.json(
-      { error: 'Internal server error occurred' },
+      { error: t('server.internalError') },
       { status: 500 }
     );
   }
