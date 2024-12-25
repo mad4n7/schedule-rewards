@@ -81,7 +81,69 @@
     "save": "Salvar Negócio",
     "cancel": "Cancelar",
     "delete": "Excluir Negócio",
-    "confirmDelete": "Tem certeza que deseja excluir este negócio?"
+    "confirmDelete": "Tem certeza que deseja excluir este negócio?",
+    "Index": {
+      "title": "Bem-vindo ao Schedule & Rewards"
+    },
+    "Auth": {
+      "signIn": "Entrar",
+      "signUp": "Cadastrar",
+      "email": "Email",
+      "password": "Senha",
+      "confirmPassword": "Confirmar Senha",
+      "forgotPassword": "Esqueceu a senha?",
+      "noAccount": "Não tem uma conta?",
+      "hasAccount": "Já tem uma conta?",
+      "verifyEmail": "Verificar Email",
+      "verifyEmailSent": "Email de verificação enviado. Por favor, verifique sua caixa de entrada.",
+      "verifyEmailSuccess": "Email verificado com sucesso! Você já pode entrar.",
+      "invalidCredentials": "Email ou senha inválidos"
+    },
+    "Business": {
+      "create": "Criar Negócio",
+      "name": "Nome do Negócio",
+      "description": "Descrição do Negócio",
+      "choosePlan": "Escolha um Plano",
+      "plans": {
+        "title": "Planos de Assinatura",
+        "monthly": "Mensal",
+        "yearly": "Anual",
+        "features": "Recursos",
+        "selectPlan": "Selecionar Plano",
+        "currentPlan": "Plano Atual"
+      },
+      "payment": {
+        "title": "Pagamento",
+        "amount": "Valor",
+        "pixCode": "Código PIX",
+        "copyPixCode": "Copiar Código PIX",
+        "pixCodeCopied": "Código PIX copiado!",
+        "expiresAt": "Expira em",
+        "status": {
+          "pending": "Pendente",
+          "paid": "Pago",
+          "expired": "Expirado",
+          "cancelled": "Cancelado"
+        },
+        "instructions": {
+          "title": "Como pagar com PIX",
+          "step1": "1. Abra seu aplicativo bancário",
+          "step2": "2. Encontre a opção de pagamento PIX",
+          "step3": "3. Copie o código PIX",
+          "step4": "4. Cole o código no seu aplicativo bancário",
+          "step5": "5. Confirme o pagamento"
+        }
+      },
+      "success": {
+        "created": "Negócio criado com sucesso!",
+        "paymentReceived": "Pagamento recebido! Seu negócio está ativo."
+      },
+      "errors": {
+        "creation": "Erro ao criar negócio",
+        "payment": "Erro ao processar pagamento",
+        "planRequired": "Por favor, selecione um plano"
+      }
+    }
   },
   "appointments": {
     "title": "Agendamentos",

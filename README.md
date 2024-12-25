@@ -67,6 +67,18 @@ npx prisma migrate dev --name init
 npx prisma studio
 ```
 
+### Database Setup
+
+1. Run database migrations:
+```bash
+npx prisma migrate deploy
+```
+
+2. Seed the database with initial plans:
+```bash
+npx prisma db seed
+```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
