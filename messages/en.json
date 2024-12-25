@@ -124,6 +124,8 @@
     "close": "Close"
   },
   "navigation": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "dashboard": "Dashboard",
     "appointments": "Appointments",
     "rewards": "Rewards",
