@@ -1,45 +1,54 @@
-import { NextResponse } from 'next/server';
-import { hash } from 'bcrypt';
-import { prisma } from '@/lib/prisma';
-import { signUpSchema } from '@/lib/validations/auth.schema';
+import { NextResponse } from 'next/server'
+import { hash } from 'bcrypt'
+import { prisma } from '@/lib/prisma'
+import { signUpSchema } from '@/lib/validations/auth.schema'
+import { sendVerificationEmail } from '@/lib/email'
+import crypto from 'crypto'
 
 export async function POST(req: Request) {
   try {
-    const json = await req.json();
-    const body = signUpSchema.parse(json);
+    const body = await req.json()
+    const { email, password, name } = signUpSchema.parse(body)
 
-    const exists = await prisma.user.findUnique({
-      where: { email: body.email },
-    });
+    // Check if user exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    })
 
-    if (exists) {
-      return NextResponse.json(
-        { error: 'User already exists' },
-        { status: 400 }
-      );
+    if (existingUser) {
+      return new NextResponse('User already exists', { status: 409 })
     }
 
-    const hashedPassword = await hash(body.password, 10);
+    const hashedPassword = await hash(password, 10)
+    const verificationToken = crypto.randomBytes(32).toString('hex')
 
+    // Create user with verification token
     const user = await prisma.user.create({
       data: {
-        name: body.name,
-        email: body.email,
+        name,
+        email,
         password: hashedPassword,
+        emailVerified: null,
+        verificationToken,
       },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-      },
-    });
+    })
 
-    return NextResponse.json(user);
+    // Send verification email
+    await sendVerificationEmail({
+      email,
+      token: verificationToken,
+      name,
+      locale: body.locale || 'en',
+    })
+
+    return NextResponse.json({
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+    })
   } catch (error) {
-    console.error('Registration error:', error);
-    return NextResponse.json(
-      { error: 'Invalid request' },
-      { status: 400 }
-    );
+    console.error('[REGISTER_ERROR]', error)
+    return new NextResponse('Internal Error', { status: 500 })
   }
 }

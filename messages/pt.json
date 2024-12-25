@@ -1,0 +1,126 @@
+{
+  "scheduleAndRewards": "Agenda & Recompensas",
+  "streamlineBusinessSchedulingAndRewardLoyalCustomers": "Otimize o agendamento do seu negócio e recompense seus clientes fiéis",
+  "welcomeBack": "Bem-vindo de volta",
+  "enterCredentialsToSignIn": "Digite suas credenciais para entrar na sua conta",
+  "createAccount": "Criar uma conta",
+  "enterDetailsToCreateAccount": "Digite seus dados para criar sua conta",
+  "byClickingContinueYouAgreeTo": "Ao clicar em continuar, você concorda com nossos",
+  "termsOfService": "Termos de Serviço",
+  "and": "e",
+  "privacyPolicy": "Política de Privacidade",
+  "navigation": {
+    "dashboard": "Painel",
+    "appointments": "Agendamentos",
+    "rewards": "Recompensas",
+    "business": "Negócio",
+    "profile": "Perfil",
+    "settings": "Configurações"
+  },
+  "dashboard": {
+    "welcome": "Bem-vindo, {name}!",
+    "stats": {
+      "appointments": "Agendamentos",
+      "rewards": "Recompensas",
+      "businesses": "Negócios",
+      "points": "Pontos"
+    }
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signUp": "Cadastrar",
+    "signOut": "Sair",
+    "email": "Email",
+    "password": "Senha",
+    "confirmPassword": "Confirmar Senha",
+    "name": "Nome",
+    "continue": "Continuar com {provider}",
+    "or": "ou",
+    "alreadyHaveAccount": "Já tem uma conta? Entre",
+    "dontHaveAccount": "Não tem uma conta? Cadastre-se",
+    "forgotPassword": "Esqueceu sua senha?",
+    "invalidCredentials": "Email ou senha inválidos",
+    "registrationFailed": "Falha no cadastro. Por favor, tente novamente.",
+    "emailVerificationRequired": "Por favor, verifique seu endereço de email",
+    "emailVerificationSent": "Um email de verificação foi enviado para seu endereço de email",
+    "emailVerificationSuccess": "Seu email foi verificado com sucesso",
+    "loading": "Carregando...",
+    "emailVerification": {
+      "subject": "Verifique seu endereço de e-mail",
+      "greeting": "Olá {name}",
+      "message": "Obrigado por se cadastrar! Por favor, verifique seu endereço de e-mail clicando no botão abaixo:",
+      "button": "Verificar E-mail",
+      "expires": "Este link expira em 24 horas.",
+      "ignoreMessage": "Se você não criou uma conta, você pode ignorar este e-mail com segurança."
+    },
+    "emailVerified": "E-mail verificado!",
+    "emailVerifiedMessage": "Seu e-mail foi verificado. Você já pode entrar na sua conta."
+  },
+  "profile": {
+    "title": "Perfil",
+    "subtitle": "Gerencie suas configurações de conta",
+    "language": "Idioma",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "updateSuccess": "Perfil atualizado com sucesso",
+    "updateError": "Erro ao atualizar perfil"
+  },
+  "business": {
+    "title": "Negócio",
+    "create": "Criar Negócio",
+    "edit": "Editar Negócio",
+    "name": "Nome do Negócio",
+    "description": "Descrição",
+    "category": "Categoria",
+    "address": "Endereço",
+    "phone": "Telefone",
+    "email": "E-mail",
+    "website": "Site",
+    "hours": "Horário de Funcionamento",
+    "save": "Salvar Negócio",
+    "cancel": "Cancelar",
+    "delete": "Excluir Negócio",
+    "confirmDelete": "Tem certeza que deseja excluir este negócio?"
+  },
+  "appointments": {
+    "title": "Agendamentos",
+    "create": "Criar Agendamento",
+    "edit": "Editar Agendamento",
+    "date": "Data",
+    "time": "Hora",
+    "duration": "Duração",
+    "service": "Serviço",
+    "notes": "Observações",
+    "status": {
+      "pending": "Pendente",
+      "confirmed": "Confirmado",
+      "cancelled": "Cancelado",
+      "completed": "Concluído"
+    },
+    "save": "Salvar Agendamento",
+    "cancel": "Cancelar Agendamento",
+    "reschedule": "Reagendar"
+  },
+  "rewards": {
+    "title": "Recompensas",
+    "points": "Pontos",
+    "earnedPoints": "Você ganhou {points} pontos",
+    "redeem": "Resgatar",
+    "history": "Histórico de Pontos",
+    "available": "Recompensas Disponíveis",
+    "claimed": "Recompensas Resgatadas",
+    "expires": "Expira em {date}"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro",
+    "success": "Sucesso",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "view": "Visualizar",
+    "close": "Fechar"
+  }
+}
