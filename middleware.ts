@@ -1,50 +1,67 @@
-import { getToken } from 'next-auth/jwt'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { languages, defaultLanguage } from './config/languages'
-import createIntlMiddleware from 'next-intl/middleware'
+import createIntlMiddleware from 'next-intl/middleware';
+import { withAuth } from 'next-auth/middleware';
+import { getToken } from 'next-auth/jwt';
 
 const publicPages = [
   '/auth/signin',
   '/auth/signup',
   '/auth/verify',
   '/auth/verify-success',
-]
+  '/auth/error',
+  '/sign-out'
+];
 
-// Create intl middleware
 const intlMiddleware = createIntlMiddleware({
   locales: Object.keys(languages),
   defaultLocale: defaultLanguage,
   localePrefix: 'always'
-})
+});
+
+const authMiddleware = withAuth(
+  function onSuccess(req) {
+    return intlMiddleware(req);
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => token != null
+    },
+    pages: {
+      signIn: `/${defaultLanguage}/auth/signin`,
+    }
+  }
+);
 
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request })
-  const pathname = request.nextUrl.pathname
+  const publicPatterns = publicPages.map(p => `/${defaultLanguage}${p}`);
+  const isPublicPage = publicPatterns.some(p => request.nextUrl.pathname.startsWith(p));
 
-  // Handle locale routing first
-  const response = await intlMiddleware(request)
+  // Handle public pages
+  if (isPublicPage) {
+    return intlMiddleware(request);
+  }
 
-  // Strip locale prefix for checking paths
-  const pathnameWithoutLocale = pathname.replace(/^\/[^/]+/, '')
-  
-  // If it's a public page, allow access
-  if (publicPages.some(page => pathnameWithoutLocale.startsWith(page))) {
-    if (token && pathnameWithoutLocale.startsWith('/auth')) {
-      const url = new URL('/', request.url)
-      return NextResponse.redirect(url)
+  // Get the pathname of the request (e.g. /, /protected, /protected/123)
+  const pathname = request.nextUrl.pathname;
+
+  try {
+    // Validate token exists
+    const token = await getToken({ req: request });
+    
+    if (!token && !isPublicPage) {
+      const url = new URL(`/${defaultLanguage}/auth/signin`, request.url);
+      url.searchParams.set('callbackUrl', encodeURI(pathname));
+      return NextResponse.redirect(url);
     }
-    return response
-  }
 
-  // Protected routes
-  if (!token) {
-    const signInUrl = new URL('/auth/signin', request.url)
-    signInUrl.searchParams.set('callbackUrl', pathname)
-    return NextResponse.redirect(signInUrl)
+    return authMiddleware(request);
+  } catch (error) {
+    // If there's an error, redirect to the error page
+    const url = new URL(`/${defaultLanguage}/auth/error`, request.url);
+    return NextResponse.redirect(url);
   }
-
-  return response
 }
 
 export const config = {

@@ -13,6 +13,10 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signOut": "Sign Out",
+    "signedOut": "Signed Out",
+    "signOutDescription": "You have been successfully signed out of your account.",
+    "signOutSuccessMessage": "Thank you for using Schedule & Rewards. We hope to see you again soon!",
+    "backToHome": "Back to home",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
@@ -23,7 +27,12 @@
     "dontHaveAccount": "Don't have an account? Sign up",
     "forgotPassword": "Forgot password?",
     "invalidCredentials": "Invalid email or password",
+    "emailNotVerified": "Please verify your email address before signing in. Check your inbox for the verification link.",
     "registrationFailed": "Registration failed. Please try again.",
+    "verifyEmailTitle": "Check your email",
+    "verifyEmailDescription": "We've sent you a verification link",
+    "checkEmailInstructions": "Please check your email for a verification link. If you don't see it, check your spam folder.",
+    "backToSignIn": "Back to Sign In",
     "emailVerification": {
       "subject": "Verify your email address",
       "greeting": "Hi {name}",
@@ -37,7 +46,19 @@
     "emailVerificationSuccess": "Your email has been verified successfully",
     "emailVerified": "Email verified!",
     "emailVerifiedMessage": "Your email has been verified. You can now sign in to your account.",
-    "loading": "Please wait..."
+    "emailVerifiedSuccess": "Email Verified Successfully",
+    "loading": "Please wait...",
+    "register": "Register",
+    "registering": "Registering...",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "verificationEmailSent": "Verification email sent! Please check your inbox.",
+    "errors": {
+      "registration": "An error occurred during authentication. Please try again.",
+      "verification": "Please verify your email before signing in.",
+      "accessDenied": "Invalid email or password. Please try again."
+    },
+    "error": "Authentication Error"
   },
   "profile": {
     "title": "Profile",
@@ -107,9 +128,13 @@
     "close": "Close"
   },
   "navigation": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "dashboard": "Dashboard",
     "appointments": "Appointments",
     "rewards": "Rewards",
+    "business": "Business",
+    "profile": "Profile",
     "settings": "Settings",
     "signOut": "Sign Out"
   },
@@ -120,6 +145,94 @@
       "rewards": "Rewards",
       "businesses": "Businesses",
       "points": "Points"
+    },
+    "noBusinesses": "You don't have any businesses yet",
+    "createBusiness": "Create Business",
+    "manage": "Manage Business"
+  },
+  "Index": {
+    "title": "Welcome to Schedule & Rewards"
+  },
+  "Auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "verifyEmail": "Verify Email",
+    "verifyEmailSent": "Verification email sent. Please check your inbox.",
+    "verifyEmailSuccess": "Email verified successfully! You can now sign in.",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "Business": {
+    "create": "Create Business",
+    "name": "Business Name",
+    "description": "Business Description",
+    "choosePlan": "Choose a Plan",
+    "plans": {
+      "title": "Subscription Plans",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "features": "Features",
+      "selectPlan": "Select Plan",
+      "currentPlan": "Current Plan"
+    },
+    "payment": {
+      "title": "Payment",
+      "amount": "Amount",
+      "pixCode": "PIX Code",
+      "copyPixCode": "Copy PIX Code",
+      "pixCodeCopied": "PIX Code copied!",
+      "expiresAt": "Expires at",
+      "status": {
+        "pending": "Pending",
+        "paid": "Paid",
+        "expired": "Expired",
+        "cancelled": "Cancelled"
+      },
+      "instructions": {
+        "title": "How to pay with PIX",
+        "step1": "1. Open your bank app",
+        "step2": "2. Find the PIX payment option",
+        "step3": "3. Copy the PIX code",
+        "step4": "4. Paste the code in your bank app",
+        "step5": "5. Confirm the payment"
+      }
+    },
+    "success": {
+      "created": "Business created successfully!",
+      "paymentReceived": "Payment received! Your business is now active."
+    },
+    "errors": {
+      "creation": "Error creating business",
+      "payment": "Error processing payment",
+      "planRequired": "Please select a plan"
+    }
+  },
+  "error": {
+    "title": "Something went wrong!",
+    "description": "An error occurred while processing your request.",
+    "tryAgain": "Try Again"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "backHome": "Back to Home"
+  },
+  "errors": {
+    "validation": {
+      "noRequestBody": "No request body provided",
+      "validationError": "Invalid input data",
+      "userExists": "An account with this email already exists"
+    },
+    "server": {
+      "databaseError": "A database error occurred. Please try again later",
+      "emailError": "Failed to send verification email. Please try again later",
+      "internalError": "An internal server error occurred. Please try again later",
+      "userCheckError": "Unable to verify account availability. Please try again later"
     }
   }
 }

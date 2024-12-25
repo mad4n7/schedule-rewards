@@ -24,12 +24,20 @@
       "rewards": "Recompensas",
       "businesses": "Negócios",
       "points": "Pontos"
-    }
+    },
+    "dashboard": "Painel",
+    "noBusinesses": "Você ainda não tem nenhum negócio",
+    "createBusiness": "Criar Negócio",
+    "manage": "Gerenciar Negócio"
   },
   "auth": {
     "signIn": "Entrar",
     "signUp": "Cadastrar",
     "signOut": "Sair",
+    "signedOut": "Sessão Encerrada",
+    "signOutDescription": "Você foi desconectado da sua conta com sucesso.",
+    "signOutSuccessMessage": "Obrigado por usar o Schedule & Rewards. Esperamos vê-lo novamente em breve!",
+    "backToHome": "Voltar para a página inicial",
     "email": "Email",
     "password": "Senha",
     "confirmPassword": "Confirmar Senha",
@@ -54,7 +62,30 @@
       "ignoreMessage": "Se você não criou uma conta, você pode ignorar este e-mail com segurança."
     },
     "emailVerified": "E-mail verificado!",
-    "emailVerifiedMessage": "Seu e-mail foi verificado. Você já pode entrar na sua conta."
+    "emailVerifiedMessage": "Seu e-mail foi verificado. Você já pode entrar na sua conta.",
+    "register": "Registrar",
+    "registering": "Registrando...",
+    "name": "Nome",
+    "email": "Email",
+    "password": "Senha",
+    "confirmPassword": "Confirmar Senha",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "signIn": "Entrar",
+    "verificationEmailSent": "Email de verificação enviado! Por favor, verifique sua caixa de entrada.",
+    "errors": {
+      "registration": "Falha ao registrar. Por favor, tente novamente.",
+      "validation": {
+        "noRequestBody": "Nenhum dado fornecido",
+        "validationError": "Dados inválidos",
+        "userExists": "Já existe uma conta com este e-mail"
+      },
+      "server": {
+        "databaseError": "Ocorreu um erro no banco de dados. Por favor, tente novamente mais tarde",
+        "emailError": "Falha ao enviar e-mail de verificação. Por favor, tente novamente mais tarde",
+        "internalError": "Ocorreu um erro interno. Por favor, tente novamente mais tarde",
+        "userCheckError": "Não foi possível verificar a disponibilidade da conta. Por favor, tente novamente mais tarde"
+      }
+    }
   },
   "profile": {
     "title": "Perfil",
@@ -81,7 +112,69 @@
     "save": "Salvar Negócio",
     "cancel": "Cancelar",
     "delete": "Excluir Negócio",
-    "confirmDelete": "Tem certeza que deseja excluir este negócio?"
+    "confirmDelete": "Tem certeza que deseja excluir este negócio?",
+    "Index": {
+      "title": "Bem-vindo ao Schedule & Rewards"
+    },
+    "Auth": {
+      "signIn": "Entrar",
+      "signUp": "Cadastrar",
+      "email": "Email",
+      "password": "Senha",
+      "confirmPassword": "Confirmar Senha",
+      "forgotPassword": "Esqueceu a senha?",
+      "noAccount": "Não tem uma conta?",
+      "hasAccount": "Já tem uma conta?",
+      "verifyEmail": "Verificar Email",
+      "verifyEmailSent": "Email de verificação enviado. Por favor, verifique sua caixa de entrada.",
+      "verifyEmailSuccess": "Email verificado com sucesso! Você já pode entrar.",
+      "invalidCredentials": "Email ou senha inválidos"
+    },
+    "Business": {
+      "create": "Criar Negócio",
+      "name": "Nome do Negócio",
+      "description": "Descrição do Negócio",
+      "choosePlan": "Escolha um Plano",
+      "plans": {
+        "title": "Planos de Assinatura",
+        "monthly": "Mensal",
+        "yearly": "Anual",
+        "features": "Recursos",
+        "selectPlan": "Selecionar Plano",
+        "currentPlan": "Plano Atual"
+      },
+      "payment": {
+        "title": "Pagamento",
+        "amount": "Valor",
+        "pixCode": "Código PIX",
+        "copyPixCode": "Copiar Código PIX",
+        "pixCodeCopied": "Código PIX copiado!",
+        "expiresAt": "Expira em",
+        "status": {
+          "pending": "Pendente",
+          "paid": "Pago",
+          "expired": "Expirado",
+          "cancelled": "Cancelado"
+        },
+        "instructions": {
+          "title": "Como pagar com PIX",
+          "step1": "1. Abra seu aplicativo bancário",
+          "step2": "2. Encontre a opção de pagamento PIX",
+          "step3": "3. Copie o código PIX",
+          "step4": "4. Cole o código no seu aplicativo bancário",
+          "step5": "5. Confirme o pagamento"
+        }
+      },
+      "success": {
+        "created": "Negócio criado com sucesso!",
+        "paymentReceived": "Pagamento recebido! Seu negócio está ativo."
+      },
+      "errors": {
+        "creation": "Erro ao criar negócio",
+        "payment": "Erro ao processar pagamento",
+        "planRequired": "Por favor, selecione um plano"
+      }
+    }
   },
   "appointments": {
     "title": "Agendamentos",
@@ -122,5 +215,15 @@
     "edit": "Editar",
     "view": "Visualizar",
     "close": "Fechar"
+  },
+  "error": {
+    "title": "Algo deu errado!",
+    "description": "Ocorreu um erro ao processar sua solicitação.",
+    "tryAgain": "Tentar Novamente"
+  },
+  "notFound": {
+    "title": "Página Não Encontrada",
+    "description": "A página que você está procurando não existe.",
+    "backHome": "Voltar para o Início"
   }
 }
