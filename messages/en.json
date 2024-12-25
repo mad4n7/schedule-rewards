@@ -47,8 +47,11 @@
     "signIn": "Sign In",
     "verificationEmailSent": "Verification email sent! Please check your inbox.",
     "errors": {
-      "registration": "Failed to register. Please try again."
-    }
+      "registration": "An error occurred during authentication. Please try again.",
+      "verification": "Please verify your email before signing in.",
+      "accessDenied": "Invalid email or password. Please try again."
+    },
+    "error": "Authentication Error"
   },
   "profile": {
     "title": "Profile",
@@ -121,6 +124,8 @@
     "dashboard": "Dashboard",
     "appointments": "Appointments",
     "rewards": "Rewards",
+    "business": "Business",
+    "profile": "Profile",
     "settings": "Settings",
     "signOut": "Sign Out"
   },
@@ -132,7 +137,6 @@
       "businesses": "Businesses",
       "points": "Points"
     },
-    "dashboard": "Dashboard",
     "noBusinesses": "You don't have any businesses yet",
     "createBusiness": "Create Business",
     "manage": "Manage Business"

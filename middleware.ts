@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { languages, defaultLanguage } from './config/languages'
-import createMiddleware from 'next-intl/middleware';
+import createIntlMiddleware from 'next-intl/middleware';
+import { withAuth } from 'next-auth/middleware';
 import { getToken } from 'next-auth/jwt';
 
 const publicPages = [
@@ -9,14 +10,30 @@ const publicPages = [
   '/auth/signup',
   '/auth/verify',
   '/auth/verify-success',
-]
+  '/auth/error'
+];
 
-// Create the next-intl middleware
-const intlMiddleware = createMiddleware({
+const intlMiddleware = createIntlMiddleware({
   locales: Object.keys(languages),
   defaultLocale: defaultLanguage,
   localePrefix: 'always'
 });
+
+const authMiddleware = withAuth(
+  function onSuccess(req) {
+    return intlMiddleware(req);
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => token != null
+    },
+    pages: {
+      signIn: '/auth/signin',
+      error: '/auth/error',
+      verifyRequest: '/auth/verify'
+    }
+  }
+);
 
 export default async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
@@ -32,14 +49,12 @@ export default async function middleware(request: NextRequest) {
     ? pathname.replace(`/${pathnameLocale}`, '')
     : pathname;
 
-  // If it's a public page, allow access
-  if (publicPages.some(page => pathnameWithoutLocale.startsWith(page))) {
-    // If user is authenticated and trying to access auth pages, redirect to home
-    if (token && pathnameWithoutLocale.startsWith('/auth')) {
-      return NextResponse.redirect(new URL(`/${locale}`, request.url));
-    }
-    const response = intlMiddleware(request);
-    return response;
+  const publicPatterns = publicPages.map(
+    (p) => `/${locale}${p}`
+  );
+
+  if (publicPatterns.some((p) => request.nextUrl.pathname.startsWith(p))) {
+    return intlMiddleware(request);
   }
 
   // For the root path, redirect to the default locale if not authenticated
@@ -51,15 +66,7 @@ export default async function middleware(request: NextRequest) {
     return response;
   }
 
-  // Protected routes
-  if (!token) {
-    const signInUrl = new URL(`/${locale}/auth/signin`, request.url);
-    signInUrl.searchParams.set('callbackUrl', pathname);
-    return NextResponse.redirect(signInUrl);
-  }
-
-  const response = intlMiddleware(request);
-  return response;
+  return (authMiddleware as any)(request);
 }
 
 export const config = {
