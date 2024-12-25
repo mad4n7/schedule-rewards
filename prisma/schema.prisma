@@ -320,18 +320,21 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  business_user business_user[]
-  businesses    businesses[]
-  customers     customers[]
-  created_at    DateTime? @db.Timestamp(0)
-  updated_at    DateTime? @db.Timestamp(0)
+  id                String    @id @default(cuid())
+  name              String?
+  email             String?   @unique
+  emailVerified     DateTime?
+  image             String?
+  password          String?
+  language          String    @default("en")
+  verificationToken String?   @unique
+  accounts          Account[]
+  sessions          Session[]
+  business_user     business_user[]
+  businesses        businesses[]
+  customers         customers[]
+  created_at        DateTime? @db.Timestamp(0)
+  updated_at        DateTime? @db.Timestamp(0)
 }
 
 model VerificationToken {

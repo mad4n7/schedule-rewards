@@ -1,0 +1,125 @@
+{
+  "scheduleAndRewards": "Schedule & Rewards",
+  "streamlineBusinessSchedulingAndRewardLoyalCustomers": "Streamline your business scheduling and reward your loyal customers.",
+  "welcomeBack": "Welcome back",
+  "enterCredentialsToSignIn": "Enter your credentials to sign in to your account",
+  "createAccount": "Create an account",
+  "enterDetailsToCreateAccount": "Enter your details to create your account",
+  "byClickingContinueYouAgreeTo": "By clicking continue, you agree to our",
+  "termsOfService": "Terms of Service",
+  "and": "and",
+  "privacyPolicy": "Privacy Policy",
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "continue": "Continue with {provider}",
+    "or": "or",
+    "alreadyHaveAccount": "Already have an account? Sign in",
+    "dontHaveAccount": "Don't have an account? Sign up",
+    "forgotPassword": "Forgot password?",
+    "invalidCredentials": "Invalid email or password",
+    "registrationFailed": "Registration failed. Please try again.",
+    "emailVerification": {
+      "subject": "Verify your email address",
+      "greeting": "Hi {name}",
+      "message": "Thanks for signing up! Please verify your email address by clicking the button below:",
+      "button": "Verify Email",
+      "expires": "This link expires in 24 hours.",
+      "ignoreMessage": "If you didn't create an account, you can safely ignore this email."
+    },
+    "emailVerificationRequired": "Please verify your email address",
+    "emailVerificationSent": "A verification email has been sent to your email address",
+    "emailVerificationSuccess": "Your email has been verified successfully",
+    "emailVerified": "Email verified!",
+    "emailVerifiedMessage": "Your email has been verified. You can now sign in to your account.",
+    "loading": "Please wait..."
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your account settings",
+    "language": "Language",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Failed to update profile"
+  },
+  "business": {
+    "title": "Business",
+    "create": "Create Business",
+    "edit": "Edit Business",
+    "name": "Business Name",
+    "description": "Description",
+    "category": "Category",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "hours": "Business Hours",
+    "save": "Save Business",
+    "cancel": "Cancel",
+    "delete": "Delete Business",
+    "confirmDelete": "Are you sure you want to delete this business?"
+  },
+  "appointments": {
+    "title": "Appointments",
+    "create": "Create Appointment",
+    "edit": "Edit Appointment",
+    "date": "Date",
+    "time": "Time",
+    "duration": "Duration",
+    "service": "Service",
+    "notes": "Notes",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
+    },
+    "save": "Save Appointment",
+    "cancel": "Cancel Appointment",
+    "reschedule": "Reschedule"
+  },
+  "rewards": {
+    "title": "Rewards",
+    "points": "Points",
+    "earnedPoints": "You have earned {points} points",
+    "redeem": "Redeem",
+    "history": "Points History",
+    "available": "Available Rewards",
+    "claimed": "Claimed Rewards",
+    "expires": "Expires {date}"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "appointments": "Appointments",
+    "rewards": "Rewards",
+    "settings": "Settings",
+    "signOut": "Sign Out"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}!",
+    "stats": {
+      "appointments": "Appointments",
+      "rewards": "Rewards",
+      "businesses": "Businesses",
+      "points": "Points"
+    }
+  }
+}
