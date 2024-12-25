@@ -1,8 +1,8 @@
 import { getToken } from 'next-auth/jwt'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import createMiddleware from 'next-intl/middleware'
-import { defaultLanguage } from './config/languages'
+import { languages, defaultLanguage } from './config/languages'
+import createIntlMiddleware from 'next-intl/middleware'
 
 const publicPages = [
   '/auth/signin',
@@ -12,21 +12,25 @@ const publicPages = [
 ]
 
 // Create intl middleware
-const intlMiddleware = createMiddleware({
-  locales: ['en', 'pt'],
+const intlMiddleware = createIntlMiddleware({
+  locales: Object.keys(languages),
   defaultLocale: defaultLanguage,
+  localePrefix: 'always'
 })
 
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request })
   const pathname = request.nextUrl.pathname
 
-  // Handle internationalization first
-  const response = intlMiddleware(request)
+  // Handle locale routing first
+  const response = await intlMiddleware(request)
 
+  // Strip locale prefix for checking paths
+  const pathnameWithoutLocale = pathname.replace(/^\/[^/]+/, '')
+  
   // If it's a public page, allow access
-  if (publicPages.some(page => pathname.includes(page))) {
-    if (token && pathname.includes('/auth')) {
+  if (publicPages.some(page => pathnameWithoutLocale.startsWith(page))) {
+    if (token && pathnameWithoutLocale.startsWith('/auth')) {
       const url = new URL('/', request.url)
       return NextResponse.redirect(url)
     }
@@ -44,8 +48,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    // Skip all internal paths (_next, api, etc)
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!api|_next|.*\\..*).*)']
 }
