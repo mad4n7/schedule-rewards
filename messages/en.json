@@ -120,7 +120,11 @@
       "rewards": "Rewards",
       "businesses": "Businesses",
       "points": "Points"
-    }
+    },
+    "dashboard": "Dashboard",
+    "noBusinesses": "You don't have any businesses yet",
+    "createBusiness": "Create Business",
+    "manage": "Manage Business"
   },
   "Index": {
     "title": "Welcome to Schedule & Rewards"
@@ -183,5 +187,15 @@
       "payment": "Error processing payment",
       "planRequired": "Please select a plan"
     }
+  },
+  "error": {
+    "title": "Something went wrong!",
+    "description": "An error occurred while processing your request.",
+    "tryAgain": "Try Again"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "backHome": "Back to Home"
   }
 }

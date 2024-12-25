@@ -24,7 +24,11 @@
       "rewards": "Recompensas",
       "businesses": "Negócios",
       "points": "Pontos"
-    }
+    },
+    "dashboard": "Painel",
+    "noBusinesses": "Você ainda não tem nenhum negócio",
+    "createBusiness": "Criar Negócio",
+    "manage": "Gerenciar Negócio"
   },
   "auth": {
     "signIn": "Entrar",
@@ -184,5 +188,15 @@
     "edit": "Editar",
     "view": "Visualizar",
     "close": "Fechar"
+  },
+  "error": {
+    "title": "Algo deu errado!",
+    "description": "Ocorreu um erro ao processar sua solicitação.",
+    "tryAgain": "Tentar Novamente"
+  },
+  "notFound": {
+    "title": "Página Não Encontrada",
+    "description": "A página que você está procurando não existe.",
+    "backHome": "Voltar para o Início"
   }
 }
