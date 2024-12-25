@@ -1,10 +1,11 @@
-import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import { languages } from '@/config/languages';
 import { notFound } from 'next/navigation';
 import { Locale } from '@/config/i18n-config';
+import { getMessages } from '@/lib/get-messages';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,15 +18,15 @@ export function generateStaticParams() {
   return Object.keys(languages).map((locale) => ({ locale }));
 }
 
-export default function RootLayout({ children, params: { locale } }: RootLayoutProps) {
-  const messages = useMessages();
+export default async function RootLayout({ children, params: { locale } }: RootLayoutProps) {
+  const messages = await getMessages(locale);
 
   // Validate that the incoming `locale` parameter is valid
   if (!Object.keys(languages).includes(locale)) notFound();
 
   return (
-    <html lang={locale}>
-      <body className={inter.className}>
+    <html lang={locale} suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider
             attribute="class"

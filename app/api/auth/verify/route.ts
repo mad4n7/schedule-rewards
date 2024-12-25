@@ -5,6 +5,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const token = searchParams.get('token')
+    const locale = searchParams.get('locale') || 'en'
 
     if (!token) {
       return new NextResponse('Missing token', { status: 400 })
@@ -28,8 +29,8 @@ export async function GET(request: Request) {
       },
     })
 
-    // Redirect to success page
-    return NextResponse.redirect(new URL('/auth/verify-success', request.url))
+    // Redirect to success page with locale
+    return NextResponse.redirect(new URL(`/${locale}/auth/verify-success`, request.url))
   } catch (error) {
     console.error('[VERIFY_EMAIL_ERROR]', error)
     return new NextResponse('Internal Error', { status: 500 })

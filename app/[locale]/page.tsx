@@ -1,26 +1,27 @@
 import { getTranslations } from 'next-intl/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { redirect } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { getCurrentUser } from '@/lib/auth';
 import { Locale } from '@/config/i18n-config';
+import { prisma } from '@/lib/prisma';
 
 interface Props {
   params: { locale: Locale }
 }
 
 export default async function HomePage({ params: { locale } }: Props) {
-  const session = await getServerSession(authOptions);
+  unstable_setRequestLocale(locale);
+  
   const t = await getTranslations();
+  const user = await getCurrentUser();
 
-  if (!session?.user?.id) {
+  if (!user) {
     redirect(`/${locale}/auth/signin`);
   }
 
   // Get user's businesses
   const businesses = await prisma.business.findMany({
     where: {
-      userId: session.user.id,
+      userId: user.id,
     },
     include: {
       plan: true,

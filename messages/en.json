@@ -24,6 +24,9 @@
     "forgotPassword": "Forgot password?",
     "invalidCredentials": "Invalid email or password",
     "registrationFailed": "Registration failed. Please try again.",
+    "verifyEmailTitle": "Check your email",
+    "verifyEmailDescription": "We've sent you a verification link",
+    "checkEmailInstructions": "Please check your email inbox and click the verification link to complete your registration. If you don't see the email, check your spam folder.",
     "emailVerification": {
       "subject": "Verify your email address",
       "greeting": "Hi {name}",
@@ -37,7 +40,15 @@
     "emailVerificationSuccess": "Your email has been verified successfully",
     "emailVerified": "Email verified!",
     "emailVerifiedMessage": "Your email has been verified. You can now sign in to your account.",
-    "loading": "Please wait..."
+    "loading": "Please wait...",
+    "register": "Register",
+    "registering": "Registering...",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "verificationEmailSent": "Verification email sent! Please check your inbox.",
+    "errors": {
+      "registration": "Failed to register. Please try again."
+    }
   },
   "profile": {
     "title": "Profile",

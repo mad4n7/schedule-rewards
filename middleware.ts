@@ -18,7 +18,7 @@ const intlMiddleware = createMiddleware({
   localePrefix: 'always'
 });
 
-export async function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   const pathname = request.nextUrl.pathname;
 
@@ -38,7 +38,8 @@ export async function middleware(request: NextRequest) {
     if (token && pathnameWithoutLocale.startsWith('/auth')) {
       return NextResponse.redirect(new URL(`/${locale}`, request.url));
     }
-    return intlMiddleware(request);
+    const response = intlMiddleware(request);
+    return response;
   }
 
   // For the root path, redirect to the default locale if not authenticated
@@ -46,7 +47,8 @@ export async function middleware(request: NextRequest) {
     if (!token) {
       return NextResponse.redirect(new URL(`/${locale}/auth/signin`, request.url));
     }
-    return intlMiddleware(request);
+    const response = intlMiddleware(request);
+    return response;
   }
 
   // Protected routes
@@ -56,7 +58,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(signInUrl);
   }
 
-  return intlMiddleware(request);
+  const response = intlMiddleware(request);
+  return response;
 }
 
 export const config = {

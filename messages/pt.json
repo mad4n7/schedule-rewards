@@ -58,7 +58,19 @@
       "ignoreMessage": "Se você não criou uma conta, você pode ignorar este e-mail com segurança."
     },
     "emailVerified": "E-mail verificado!",
-    "emailVerifiedMessage": "Seu e-mail foi verificado. Você já pode entrar na sua conta."
+    "emailVerifiedMessage": "Seu e-mail foi verificado. Você já pode entrar na sua conta.",
+    "register": "Registrar",
+    "registering": "Registrando...",
+    "name": "Nome",
+    "email": "Email",
+    "password": "Senha",
+    "confirmPassword": "Confirmar Senha",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "signIn": "Entrar",
+    "verificationEmailSent": "Email de verificação enviado! Por favor, verifique sua caixa de entrada.",
+    "errors": {
+      "registration": "Falha ao registrar. Por favor, tente novamente."
+    }
   },
   "profile": {
     "title": "Perfil",

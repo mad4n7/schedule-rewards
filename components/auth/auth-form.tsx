@@ -37,31 +37,38 @@ export function AuthForm({ type }: AuthFormProps) {
       setIsLoading(true)
       setError(null)
 
+      console.log('Submitting form:', { ...data, password: '[REDACTED]' });
+      
       if (type === 'signup') {
+        console.log('Sending request to:', '/api/auth/register');
         const res = await fetch('/api/auth/register', {
           method: 'POST',
-          body: JSON.stringify(data),
           headers: {
             'Content-Type': 'application/json',
           },
-        })
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            confirmPassword: (data as z.infer<typeof signUpSchema>).confirmPassword,
+            locale: (data as z.infer<typeof signUpSchema>).locale || 'en',
+          }),
+        });
+
+        const responseData = await res.json().catch(() => null);
+        console.log('Response status:', res.status);
+        console.log('Response data:', responseData);
 
         if (!res.ok) {
-          throw new Error(t('registrationFailed'))
+          const errorMessage = responseData?.error || t('registrationFailed');
+          setError(errorMessage);
+          return;
         }
 
-        // After successful registration, sign in
-        const result = await signIn('credentials', {
-          redirect: false,
-          email: data.email,
-          password: data.password,
-        })
-
-        if (result?.error) {
-          throw new Error(t('invalidCredentials'))
-        }
-
-        router.push('/')
+        // Show success message and redirect to verification page
+        const locale = (data as z.infer<typeof signUpSchema>).locale || 'en';
+        router.push(`/${locale}/auth/verify`);
+        return;
       } else {
         const result = await signIn('credentials', {
           redirect: false,
@@ -73,7 +80,8 @@ export function AuthForm({ type }: AuthFormProps) {
           throw new Error(t('invalidCredentials'))
         }
 
-        router.push('/')
+        const locale = (data as z.infer<typeof signInSchema>).locale || 'en';
+        router.push(`/${locale}/dashboard`)
       }
     } catch (error) {
       if (error instanceof Error) {
