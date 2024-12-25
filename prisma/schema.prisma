@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,339 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum BusinessRewardStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+enum BusinessRewardType {
+  POINTS
+  VISITS
+  AMOUNT
+}
+
+enum BusinessStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum BusinessTimeSlotStatus {
+  AVAILABLE
+  UNAVAILABLE
+  BLOCKED
+}
+
+enum CustomerStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum RewardRedemptionStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model appointment_services {
+  id                  String            @id @default(cuid())
+  appointment_id      String
+  business_service_id String
+  price               Decimal           @db.Decimal(10, 2)
+  duration            Int
+  order               Int               @default(0)
+  created_at          DateTime?         @db.Timestamp(0)
+  updated_at          DateTime?         @db.Timestamp(0)
+  appointments        appointments      @relation(fields: [appointment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  business_services   business_services @relation(fields: [business_service_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([appointment_id, order])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model appointments {
+  id                    String                 @id @default(cuid())
+  business_id           String
+  customer_id           String
+  business_time_slot_id String
+  start_datetime        DateTime               @db.Timestamp(0)
+  end_datetime          DateTime               @db.Timestamp(0)
+  duration              Int
+  total_price           Decimal                @default(0) @db.Decimal(10, 2)
+  customer_notes        String?
+  business_notes        String?
+  status                AppointmentStatus      @default(PENDING)
+  confirmed_at          DateTime?              @db.Timestamp(0)
+  cancelled_at          DateTime?              @db.Timestamp(0)
+  cancellation_reason   String?                @db.VarChar(255)
+  created_at            DateTime?              @db.Timestamp(0)
+  updated_at            DateTime?              @db.Timestamp(0)
+  deleted_at            DateTime?              @db.Timestamp(0)
+  appointment_services  appointment_services[]
+  businesses            businesses             @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  business_time_slots   business_time_slots    @relation(fields: [business_time_slot_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  customers             customers              @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([business_id, start_datetime])
+  @@index([customer_id, start_datetime])
+  @@index([status, start_datetime])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model business_rewards {
+  id                          String                        @id @default(cuid())
+  business_id                 String
+  name                        String                        @db.VarChar(255)
+  description                 String
+  type                        BusinessRewardType            @default(POINTS)
+  points_required             Int                           @default(0)
+  visits_required             Int                           @default(0)
+  amount_required             Decimal                       @default(0) @db.Decimal(10, 2)
+  valid_from                  DateTime?                     @db.Date
+  valid_until                 DateTime?                     @db.Date
+  status                      BusinessRewardStatus          @default(ACTIVE)
+  created_at                  DateTime?                     @db.Timestamp(0)
+  updated_at                  DateTime?                     @db.Timestamp(0)
+  deleted_at                  DateTime?                     @db.Timestamp(0)
+  businesses                  businesses                    @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  customer_reward_redemptions customer_reward_redemptions[]
+}
+
+model business_schedules {
+  id                 String     @id @default(cuid())
+  business_id        String
+  day_of_week        Int        @db.SmallInt
+  start_time         DateTime   @db.Time(0)
+  end_time           DateTime   @db.Time(0)
+  is_closed          Boolean    @default(false)
+  slot_duration      Int        @default(30)
+  slots_per_interval Int        @default(1)
+  created_at         DateTime?  @db.Timestamp(0)
+  updated_at         DateTime?  @db.Timestamp(0)
+  deleted_at         DateTime?  @db.Timestamp(0)
+  businesses         businesses @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([business_id, day_of_week])
+}
+
+model business_services {
+  id                   String                 @id @default(cuid())
+  name                 String                 @db.VarChar(255)
+  description          String?
+  price                Decimal?               @db.Decimal(10, 2)
+  duration             Int?
+  created_at           DateTime?              @db.Timestamp(0)
+  updated_at           DateTime?              @db.Timestamp(0)
+  deleted_at           DateTime?              @db.Timestamp(0)
+  appointment_services appointment_services[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model business_time_slots {
+  id           String                  @id @default(cuid())
+  business_id  String
+  date         DateTime                @db.Date
+  start_time   DateTime                @db.Time(0)
+  end_time     DateTime                @db.Time(0)
+  capacity     Int                     @default(1)
+  booked_count Int                     @default(0)
+  is_available Boolean                 @default(true)
+  status       BusinessTimeSlotStatus  @default(AVAILABLE)
+  notes        String?
+  created_at   DateTime?               @db.Timestamp(0)
+  updated_at   DateTime?               @db.Timestamp(0)
+  deleted_at   DateTime?               @db.Timestamp(0)
+  appointments appointments[]
+  businesses   businesses              @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([business_id, date, start_time])
+}
+
+model business_user {
+  id          String     @id @default(cuid())
+  business_id String
+  user_id     String
+  created_at  DateTime?  @db.Timestamp(0)
+  updated_at  DateTime?  @db.Timestamp(0)
+  businesses  businesses @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users       User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([business_id, user_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model businesses {
+  id                          String              @id @default(cuid())
+  name                        String              @db.VarChar(255)
+  description                 String
+  user_id                     String
+  category_id                 String
+  location_id                 String
+  status                      BusinessStatus      @default(ACTIVE)
+  deleted_at                  DateTime?           @db.Timestamp(0)
+  created_at                  DateTime?           @db.Timestamp(0)
+  updated_at                  DateTime?           @db.Timestamp(0)
+  appointments                appointments[]
+  business_rewards            business_rewards[]
+  business_schedules          business_schedules[]
+  business_time_slots         business_time_slots[]
+  business_user               business_user[]
+  categories                  categories          @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  locations                   locations           @relation(fields: [location_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users                       User               @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  customer_reward_progress    customer_reward_progress[]
+  customer_reward_redemptions customer_reward_redemptions[]
+  services                    services[]
+}
+
+model categories {
+  id          String       @id @default(cuid())
+  name        String       @db.VarChar(255)
+  slug        String       @unique @db.VarChar(255)
+  description String?
+  created_at  DateTime?    @db.Timestamp(0)
+  updated_at  DateTime?    @db.Timestamp(0)
+  deleted_at  DateTime?    @db.Timestamp(0)
+  businesses  businesses[]
+}
+
+model customer_reward_progress {
+  id                 String     @id @default(cuid())
+  customer_id        String
+  business_id        String
+  points_balance     Int        @default(0)
+  visits_count       Int        @default(0)
+  total_amount_spent Decimal    @default(0) @db.Decimal(10, 2)
+  created_at         DateTime?  @db.Timestamp(0)
+  updated_at         DateTime?  @db.Timestamp(0)
+  businesses         businesses @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  customers          customers  @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([customer_id, business_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model customer_reward_redemptions {
+  id                 String                @id @default(cuid())
+  customer_id        String
+  business_id        String
+  business_reward_id String
+  points_used        Int                  @default(0)
+  visits_used        Int                  @default(0)
+  amount_applied     Decimal              @default(0) @db.Decimal(10, 2)
+  status            RewardRedemptionStatus @default(PENDING)
+  redeemed_at       DateTime?             @db.Timestamp(0)
+  created_at        DateTime?             @db.Timestamp(0)
+  updated_at        DateTime?             @db.Timestamp(0)
+  deleted_at        DateTime?             @db.Timestamp(0)
+  businesses        businesses            @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  business_rewards  business_rewards      @relation(fields: [business_reward_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  customers         customers             @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model customers {
+  id                          String                        @id @default(cuid())
+  user_id                     String
+  phone_number                String?                       @db.VarChar(255)
+  birth_date                  DateTime?                     @db.Date
+  status                      CustomerStatus                @default(ACTIVE)
+  created_at                  DateTime?                     @db.Timestamp(0)
+  updated_at                  DateTime?                     @db.Timestamp(0)
+  deleted_at                  DateTime?                     @db.Timestamp(0)
+  appointments                appointments[]
+  customer_reward_progress    customer_reward_progress[]
+  customer_reward_redemptions customer_reward_redemptions[]
+  users                       User                          @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model locations {
+  id          String       @id @default(cuid())
+  address     String       @db.VarChar(255)
+  city        String       @db.VarChar(255)
+  state       String       @db.VarChar(255)
+  country     String       @db.VarChar(255)
+  postal_code String       @db.VarChar(255)
+  latitude    Decimal?     @db.Decimal(10, 8)
+  longitude   Decimal?     @db.Decimal(11, 8)
+  created_at  DateTime?    @db.Timestamp(0)
+  updated_at  DateTime?    @db.Timestamp(0)
+  deleted_at  DateTime?    @db.Timestamp(0)
+  businesses  businesses[]
+}
+
+model services {
+  id          String     @id @default(cuid())
+  business_id String
+  name        String     @db.VarChar(255)
+  description String
+  price       Decimal    @db.Decimal(10, 2)
+  duration    Int
+  created_at  DateTime?  @db.Timestamp(0)
+  updated_at  DateTime?  @db.Timestamp(0)
+  businesses  businesses @relation(fields: [business_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+// NextAuth.js models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  business_user business_user[]
+  businesses    businesses[]
+  customers     customers[]
+  created_at    DateTime? @db.Timestamp(0)
+  updated_at    DateTime? @db.Timestamp(0)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

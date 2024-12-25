@@ -29,6 +29,44 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Database Setup
+
+Before running the application, you need to set up the database:
+
+1. Make sure you have PostgreSQL installed and running
+2. Create a `.env` file in the root directory with your database connection string:
+
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/schedule_rewards"
+```
+
+3. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+4. Generate the Prisma client:
+
+```bash
+npx prisma generate
+```
+
+5. Create and seed the database:
+
+```bash
+npx prisma migrate reset
+npx prisma migrate dev --name init
+```
+
+6. (Optional) View your database with Prisma Studio:
+
+```bash
+npx prisma studio
+```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
