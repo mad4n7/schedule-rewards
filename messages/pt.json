@@ -1,8 +1,8 @@
 {
   "scheduleAndRewards": "Agenda & Recompensas",
-  "streamlineBusinessSchedulingAndRewardLoyalCustomers": "Otimize o agendamento do seu negócio e recompense seus clientes fiéis",
+  "streamlineBusinessSchedulingAndRewardLoyalCustomers": "Simplifique o agendamento do seu negócio e recompense seus clientes fiéis.",
   "welcomeBack": "Bem-vindo de volta",
-  "enterCredentialsToSignIn": "Digite suas credenciais para entrar na sua conta",
+  "enterCredentialsToSignIn": "Digite suas credenciais para entrar em sua conta",
   "createAccount": "Criar uma conta",
   "enterDetailsToCreateAccount": "Digite seus dados para criar sua conta",
   "byClickingContinueYouAgreeTo": "Ao clicar em continuar, você concorda com nossos",
@@ -34,11 +34,11 @@
     "signIn": "Entrar",
     "signUp": "Cadastrar",
     "signOut": "Sair",
-    "signedOut": "Sessão Encerrada",
-    "signOutDescription": "Você foi desconectado da sua conta com sucesso.",
-    "signOutSuccessMessage": "Obrigado por usar o Schedule & Rewards. Esperamos vê-lo novamente em breve!",
-    "backToHome": "Voltar para a página inicial",
-    "email": "Email",
+    "signedOut": "Desconectado",
+    "signOutDescription": "Você foi desconectado com sucesso da sua conta.",
+    "signOutSuccessMessage": "Obrigado por usar o Agenda & Recompensas. Esperamos vê-lo novamente em breve!",
+    "backToHome": "Voltar para o início",
+    "email": "E-mail",
     "password": "Senha",
     "confirmPassword": "Confirmar Senha",
     "name": "Nome",
@@ -46,13 +46,14 @@
     "or": "ou",
     "alreadyHaveAccount": "Já tem uma conta? Entre",
     "dontHaveAccount": "Não tem uma conta? Cadastre-se",
-    "forgotPassword": "Esqueceu sua senha?",
-    "invalidCredentials": "Email ou senha inválidos",
-    "registrationFailed": "Falha no cadastro. Por favor, tente novamente.",
-    "emailVerificationRequired": "Por favor, verifique seu endereço de email",
-    "emailVerificationSent": "Um email de verificação foi enviado para seu endereço de email",
-    "emailVerificationSuccess": "Seu email foi verificado com sucesso",
-    "loading": "Carregando...",
+    "forgotPassword": "Esqueceu a senha?",
+    "invalidCredentials": "E-mail ou senha inválidos",
+    "emailNotVerified": "Por favor, verifique seu endereço de e-mail antes de entrar. Verifique sua caixa de entrada para o link de verificação.",
+    "registrationFailed": "Falha no registro. Por favor, tente novamente.",
+    "verifyEmailTitle": "Verifique seu e-mail",
+    "verifyEmailDescription": "Enviamos um link de verificação",
+    "checkEmailInstructions": "Por favor, verifique seu e-mail para o link de verificação. Se você não o vir, verifique sua pasta de spam.",
+    "backToSignIn": "Voltar para Entrar",
     "emailVerification": {
       "subject": "Verifique seu endereço de e-mail",
       "greeting": "Olá {name}",
@@ -61,31 +62,11 @@
       "expires": "Este link expira em 24 horas.",
       "ignoreMessage": "Se você não criou uma conta, você pode ignorar este e-mail com segurança."
     },
+    "emailVerificationRequired": "Por favor, verifique seu endereço de e-mail",
+    "emailVerificationSent": "Um e-mail de verificação foi enviado para seu endereço de e-mail",
+    "emailVerificationSuccess": "Seu e-mail foi verificado com sucesso",
     "emailVerified": "E-mail verificado!",
-    "emailVerifiedMessage": "Seu e-mail foi verificado. Você já pode entrar na sua conta.",
-    "register": "Registrar",
-    "registering": "Registrando...",
-    "name": "Nome",
-    "email": "Email",
-    "password": "Senha",
-    "confirmPassword": "Confirmar Senha",
-    "alreadyHaveAccount": "Já tem uma conta?",
-    "signIn": "Entrar",
-    "verificationEmailSent": "Email de verificação enviado! Por favor, verifique sua caixa de entrada.",
-    "errors": {
-      "registration": "Falha ao registrar. Por favor, tente novamente.",
-      "validation": {
-        "noRequestBody": "Nenhum dado fornecido",
-        "validationError": "Dados inválidos",
-        "userExists": "Já existe uma conta com este e-mail"
-      },
-      "server": {
-        "databaseError": "Ocorreu um erro no banco de dados. Por favor, tente novamente mais tarde",
-        "emailError": "Falha ao enviar e-mail de verificação. Por favor, tente novamente mais tarde",
-        "internalError": "Ocorreu um erro interno. Por favor, tente novamente mais tarde",
-        "userCheckError": "Não foi possível verificar a disponibilidade da conta. Por favor, tente novamente mais tarde"
-      }
-    }
+    "emailVerifiedMessage": "Seu e-mail foi verificado com sucesso"
   },
   "profile": {
     "title": "Perfil",
@@ -173,6 +154,70 @@
         "creation": "Erro ao criar negócio",
         "payment": "Erro ao processar pagamento",
         "planRequired": "Por favor, selecione um plano"
+      },
+      "onboarding": {
+        "title": "Criar Seu Negócio",
+        "description": "Vamos começar a configurar o perfil do seu negócio",
+        "steps": {
+          "basicInfo": "Informações Básicas",
+          "location": "Localização",
+          "schedule": "Horários",
+          "services": "Serviços"
+        },
+        "form": {
+          "basicInfo": {
+            "name": "Nome do Negócio",
+            "nameDescription": "O nome do seu negócio",
+            "description": "Descrição",
+            "descriptionDescription": "Uma breve descrição do seu negócio",
+            "category": "Categoria",
+            "categoryDescription": "Selecione a categoria que melhor descreve seu negócio"
+          },
+          "location": {
+            "address": "Endereço",
+            "addressDescription": "O endereço do seu negócio",
+            "city": "Cidade",
+            "cityDescription": "A cidade onde seu negócio está localizado",
+            "state": "Estado",
+            "stateDescription": "O estado onde seu negócio está localizado",
+            "zipCode": "CEP",
+            "zipCodeDescription": "O CEP do seu negócio",
+            "country": "País",
+            "countryDescription": "O país onde seu negócio está localizado"
+          },
+          "schedule": {
+            "days": {
+              "sunday": "Domingo",
+              "monday": "Segunda-feira",
+              "tuesday": "Terça-feira",
+              "wednesday": "Quarta-feira",
+              "thursday": "Quinta-feira",
+              "friday": "Sexta-feira",
+              "saturday": "Sábado"
+            },
+            "isClosed": "Fechado",
+            "startTime": "Horário de Abertura",
+            "endTime": "Horário de Fechamento",
+            "slotDuration": "Duração do Agendamento (minutos)",
+            "slotsPerInterval": "Agendamentos Simultâneos"
+          },
+          "services": {
+            "name": "Nome do Serviço",
+            "nameDescription": "O nome do serviço",
+            "description": "Descrição",
+            "descriptionDescription": "Uma breve descrição do serviço",
+            "price": "Preço",
+            "priceDescription": "O preço do serviço",
+            "duration": "Duração (minutos)",
+            "durationDescription": "Quanto tempo o serviço leva",
+            "addService": "Adicionar Serviço"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "next": "Próximo",
+          "finish": "Finalizar"
+        }
       }
     }
   },

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { languages, defaultLanguage } from './config/languages'
-import createIntlMiddleware from 'next-intl/middleware';
+import createMiddleware from 'next-intl/middleware';
 import { withAuth } from 'next-auth/middleware';
 import { getToken } from 'next-auth/jwt';
 
@@ -14,10 +14,10 @@ const publicPages = [
   '/sign-out'
 ];
 
-const intlMiddleware = createIntlMiddleware({
+const intlMiddleware = createMiddleware({
   locales: Object.keys(languages),
   defaultLocale: defaultLanguage,
-  localePrefix: 'always'
+  localePrefix: 'always',
 });
 
 const authMiddleware = withAuth(
@@ -35,22 +35,28 @@ const authMiddleware = withAuth(
 );
 
 export async function middleware(request: NextRequest) {
-  const publicPatterns = publicPages.map(p => `/${defaultLanguage}${p}`);
-  const isPublicPage = publicPatterns.some(p => request.nextUrl.pathname.startsWith(p));
+  const pathname = request.nextUrl.pathname;
+  const pathnameLocale = pathname.split('/')[1];
+  const response = NextResponse.next();
+
+  // Set locale in cookie
+  if (Object.keys(languages).includes(pathnameLocale)) {
+    response.cookies.set('locale', pathnameLocale);
+  }
 
   // Handle public pages
+  const publicPatterns = publicPages.map(p => `/${defaultLanguage}${p}`);
+  const isPublicPage = publicPatterns.some(p => pathname.startsWith(p));
+
   if (isPublicPage) {
     return intlMiddleware(request);
   }
-
-  // Get the pathname of the request (e.g. /, /protected, /protected/123)
-  const pathname = request.nextUrl.pathname;
 
   try {
     // Validate token exists
     const token = await getToken({ req: request });
     
-    if (!token && !isPublicPage) {
+    if (!token) {
       const url = new URL(`/${defaultLanguage}/auth/signin`, request.url);
       url.searchParams.set('callbackUrl', encodeURI(pathname));
       return NextResponse.redirect(url);
@@ -65,5 +71,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|.*\\..*).*)']
-}
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+};

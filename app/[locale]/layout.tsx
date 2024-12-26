@@ -1,43 +1,53 @@
-import { NextIntlClientProvider } from 'next-intl';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
-import { ThemeProvider } from '@/components/theme-provider';
 import { languages } from '@/config/languages';
 import { notFound } from 'next/navigation';
 import { Locale } from '@/config/i18n-config';
-import { getMessages } from '@/lib/get-messages';
+import { cn } from '@/lib/utils';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { getServerSession } from 'next-auth/next';
+import { Providers } from '@/components/providers';
+import { nextIntlConfig } from '@/config/next-intl';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  params: { locale: Locale };
+  params: { locale: string };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return Object.keys(languages).map((locale) => ({ locale }));
 }
 
-export default async function RootLayout({ children, params: { locale } }: RootLayoutProps) {
-  const messages = await getMessages(locale);
+export default async function RootLayout({ children, params }: RootLayoutProps) {
+  const locale = params.locale;
+
+  // Enable static rendering
+  unstable_setRequestLocale(locale);
 
   // Validate that the incoming `locale` parameter is valid
   if (!Object.keys(languages).includes(locale)) notFound();
 
+  const [session, messages] = await Promise.all([
+    getServerSession(),
+    import(`../../messages/${locale}.json`).then(module => module.default)
+  ]);
+
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster position="bottom-right" />
-          </ThemeProvider>
-        </NextIntlClientProvider>
+    <html lang={locale} suppressHydrationWarning className={cn(inter.variable)}>
+      <body className={cn('min-h-screen bg-background font-sans antialiased', inter.className)}>
+        <Providers
+          session={session}
+          locale={locale}
+          messages={messages}
+          timeZone={nextIntlConfig.timeZone}
+        >
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -45,30 +45,7 @@
     "emailVerificationSent": "A verification email has been sent to your email address",
     "emailVerificationSuccess": "Your email has been verified successfully",
     "emailVerified": "Email verified!",
-    "emailVerifiedMessage": "Your email has been verified. You can now sign in to your account.",
-    "emailVerifiedSuccess": "Email Verified Successfully",
-    "loading": "Please wait...",
-    "register": "Register",
-    "registering": "Registering...",
-    "alreadyHaveAccount": "Already have an account?",
-    "signIn": "Sign In",
-    "verificationEmailSent": "Verification email sent! Please check your inbox.",
-    "errors": {
-      "registration": "An error occurred during authentication. Please try again.",
-      "verification": "Please verify your email before signing in.",
-      "accessDenied": "Invalid email or password. Please try again."
-    },
-    "error": "Authentication Error"
-  },
-  "profile": {
-    "title": "Profile",
-    "subtitle": "Manage your account settings",
-    "language": "Language",
-    "save": "Save",
-    "cancel": "Cancel",
-    "edit": "Edit",
-    "updateSuccess": "Profile updated successfully",
-    "updateError": "Failed to update profile"
+    "emailVerifiedMessage": "Your email has been verified successfully"
   },
   "business": {
     "title": "Business",
@@ -85,7 +62,86 @@
     "save": "Save Business",
     "cancel": "Cancel",
     "delete": "Delete Business",
-    "confirmDelete": "Are you sure you want to delete this business?"
+    "confirmDelete": "Are you sure you want to delete this business?",
+    "onboarding": {
+      "title": "Create Your Business",
+      "description": "Let's get started with setting up your business profile",
+      "steps": {
+        "basicInfo": "Basic Info",
+        "location": "Location",
+        "schedule": "Schedule",
+        "services": "Services"
+      },
+      "buttons": {
+        "next": "Next",
+        "back": "Back",
+        "finish": "Finish"
+      },
+      "form": {
+        "basicInfo": {
+          "name": "Business Name",
+          "nameDescription": "The name of your business",
+          "description": "Description",
+          "descriptionDescription": "A brief description of your business",
+          "category": "Category",
+          "categoryDescription": "Select the category that best describes your business",
+          "buttons": {
+            "next": "Next"
+          }
+        },
+        "location": {
+          "address": "Street Address",
+          "addressDescription": "The street address of your business",
+          "city": "City",
+          "cityDescription": "The city where your business is located",
+          "state": "State",
+          "stateDescription": "The state where your business is located",
+          "zipCode": "ZIP Code",
+          "zipCodeDescription": "The ZIP code of your business location",
+          "country": "Country",
+          "countryDescription": "The country where your business is located",
+          "buttons": {
+            "next": "Next",
+            "back": "Back"
+          }
+        },
+        "schedule": {
+          "days": {
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday"
+          },
+          "isClosed": "Closed",
+          "startTime": "Opening Time",
+          "endTime": "Closing Time",
+          "slotDuration": "Appointment Duration (minutes)",
+          "slotsPerInterval": "Concurrent Appointments",
+          "buttons": {
+            "next": "Next",
+            "back": "Back"
+          }
+        },
+        "services": {
+          "name": "Service Name",
+          "nameDescription": "The name of the service",
+          "description": "Description",
+          "descriptionDescription": "A brief description of the service",
+          "price": "Price",
+          "priceDescription": "The price of the service",
+          "duration": "Duration (minutes)",
+          "durationDescription": "How long the service takes",
+          "addService": "Add Service",
+          "buttons": {
+            "finish": "Finish",
+            "back": "Back"
+          }
+        }
+      }
+    }
   },
   "appointments": {
     "title": "Appointments",
@@ -219,7 +275,7 @@
   },
   "notFound": {
     "title": "Page Not Found",
-    "description": "The page you are looking for does not exist.",
+    "description": "Sorry, we couldn't find the page you're looking for.",
     "backHome": "Back to Home"
   },
   "errors": {
@@ -234,5 +290,15 @@
       "internalError": "An internal server error occurred. Please try again later",
       "userCheckError": "Unable to verify account availability. Please try again later"
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your account settings",
+    "language": "Language",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Failed to update profile"
   }
 }
