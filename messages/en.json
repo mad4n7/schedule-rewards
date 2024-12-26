@@ -10,6 +10,9 @@
   "and": "and",
   "privacyPolicy": "Privacy Policy",
   "auth": {
+    "loading": "Loading",
+    "register": "Register",
+    "registering": "Registering",
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signOut": "Sign Out",
@@ -45,7 +48,8 @@
     "emailVerificationSent": "A verification email has been sent to your email address",
     "emailVerificationSuccess": "Your email has been verified successfully",
     "emailVerified": "Email verified!",
-    "emailVerifiedMessage": "Your email has been verified successfully"
+    "emailVerifiedMessage": "Your email has been verified. You can now sign in to your account.",
+    "emailVerifiedSuccess": "Email Verified Successfully"
   },
   "business": {
     "title": "Business",
@@ -85,6 +89,10 @@
           "descriptionDescription": "A brief description of your business",
           "category": "Category",
           "categoryDescription": "Select the category that best describes your business",
+          "state": "State",
+          "city": "City",
+          "statePlaceholder": "Select a state",
+          "cityPlaceholder": "Select a city",
           "buttons": {
             "next": "Next"
           }

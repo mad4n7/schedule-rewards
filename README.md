@@ -48,18 +48,26 @@ npm install
 yarn install
 ```
 
-4. Generate the Prisma client:
+4. Generate the Prisma client and push the schema:
 
 ```bash
 npx prisma generate
+npx prisma db push
 ```
 
-5. Create and seed the database:
+5. Seed the database with initial data:
 
+For English (default):
 ```bash
-npx prisma migrate reset
-npx prisma migrate dev --name init
+npx ts-node --compiler-options {"module":"CommonJS"} prisma/seed.ts
 ```
+
+For Portuguese (Brazil):
+```bash
+npx ts-node --compiler-options {"module":"CommonJS"} prisma/seed.pt.ts
+```
+
+Note: Running the seed command will reset the database and populate it with the selected language's data. Make sure to back up any existing data before running the seed command.
 
 6. (Optional) View your database with Prisma Studio:
 

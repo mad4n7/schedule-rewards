@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button';
 import { businessOnboardingBasicInfoSchema } from '@/lib/validations/business.schema';
 import type { BusinessOnboardingBasicInfo } from '@/lib/validations/business.schema';
 import { FormWrapper } from './form-wrapper';
+import { LocationSelect } from '@/components/location-select';
+import { useLocale } from 'next-intl';
 
 interface BasicInfoFormProps {
   initialData?: BusinessOnboardingBasicInfo;
@@ -20,6 +22,7 @@ interface BasicInfoFormProps {
 export function BasicInfoForm({ initialData, onSubmit }: BasicInfoFormProps) {
   const t = useTranslations('business.onboarding');
   const { categories, isLoading } = useCategories();
+  const locale = useLocale();
 
   const form = useForm<BusinessOnboardingBasicInfo>({
     resolver: zodResolver(businessOnboardingBasicInfoSchema),
@@ -27,6 +30,8 @@ export function BasicInfoForm({ initialData, onSubmit }: BasicInfoFormProps) {
       name: '',
       description: '',
       category_id: '',
+      state: '',
+      city: ''
     },
   });
 
@@ -85,6 +90,16 @@ export function BasicInfoForm({ initialData, onSubmit }: BasicInfoFormProps) {
                 <FormMessage />
               </FormItem>
             )}
+          />
+
+          <LocationSelect
+            country={locale === 'pt-BR' ? 'BR' : 'US'}
+            onStateChange={(state) => form.setValue('state', state)}
+            onCityChange={(city) => form.setValue('city', city)}
+            stateLabel={t('form.basicInfo.state')}
+            cityLabel={t('form.basicInfo.city')}
+            statePlaceholder={t('form.basicInfo.statePlaceholder')}
+            cityPlaceholder={t('form.basicInfo.cityPlaceholder')}
           />
 
           <Button type="submit" className="w-full">

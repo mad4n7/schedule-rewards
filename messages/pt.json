@@ -171,7 +171,11 @@
             "description": "Descrição",
             "descriptionDescription": "Uma breve descrição do seu negócio",
             "category": "Categoria",
-            "categoryDescription": "Selecione a categoria que melhor descreve seu negócio"
+            "categoryDescription": "Selecione a categoria que melhor descreve seu negócio",
+            "state": "Estado",
+            "statePlaceholder": "Selecione um estado",
+            "city": "Cidade",
+            "cityPlaceholder": "Selecione uma cidade"
           },
           "location": {
             "address": "Endereço",

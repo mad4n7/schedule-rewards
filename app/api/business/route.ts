@@ -5,7 +5,11 @@ import { z } from 'zod'
 
 const createBusinessSchema = z.object({
   name: z.string().min(1),
-  description: z.string().optional(),
+  description: z.string().min(1),
+  category_id: z.string().min(1),
+  state: z.string().min(1),
+  city: z.string().min(1),
+  country: z.string().min(1),
   planId: z.string().min(1),
 })
 
@@ -35,12 +39,26 @@ export async function POST(req: Request) {
       return new NextResponse('Plan not found', { status: 404 })
     }
 
-    const business = await prisma.business.create({
+    // Create location first
+    const location = await prisma.locations.create({
+      data: {
+        state: body.state,
+        city: body.city,
+        country: body.country,
+        address: '', // Will be filled in the next step
+        postal_code: '', // Will be filled in the next step
+      },
+    })
+
+    // Create business with location
+    const business = await prisma.businesses.create({
       data: {
         name: body.name,
         description: body.description,
-        userId: user.id,
-        planId: plan.id,
+        user_id: user.id,
+        category_id: body.category_id,
+        location_id: location.id,
+        status: 'ACTIVE',
       },
     })
 
@@ -75,13 +93,13 @@ export async function GET(req: Request) {
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
       include: {
-        Business: {
+        businesses: {
           include: {
-            plan: true,
-            payments: {
-              orderBy: { createdAt: 'desc' },
-              take: 1,
-            },
+            categories: true,
+            locations: true,
+            business_rewards: true,
+            business_schedules: true,
+            services: true,
           },
         },
       },
@@ -91,7 +109,7 @@ export async function GET(req: Request) {
       return new NextResponse('User not found', { status: 404 })
     }
 
-    return NextResponse.json(user.Business)
+    return NextResponse.json(user.businesses)
   } catch (error) {
     console.error('Error fetching businesses:', error)
     return new NextResponse('Internal Error', { status: 500 })
@@ -100,7 +118,5 @@ export async function GET(req: Request) {
 
 // Helper function to generate PIX code
 function generatePixCode(businessId: string, amount: number): string {
-  // In a real application, you would integrate with a payment provider
-  // This is just a placeholder that generates a random code
-  return `PIX${businessId}${amount}${Date.now()}`
+  return `PIX-${businessId}-${amount}-${Date.now()}`
 }
