@@ -104,10 +104,13 @@
           "cityDescription": "The city where your business is located",
           "state": "State",
           "stateDescription": "The state where your business is located",
-          "zipCode": "ZIP Code",
-          "zipCodeDescription": "The ZIP code of your business location",
+          "postalCode": "Postal Code",
+          "postalCodeDescription": "The postal code of your business location",
           "country": "Country",
           "countryDescription": "The country where your business is located",
+          "selectState": "Select a state",
+          "selectCity": "Select a city",
+          "selectCountry": "Select a country",
           "buttons": {
             "next": "Next",
             "back": "Back"

@@ -12,38 +12,59 @@ interface City {
   name: string;
 }
 
-export function useLocations() {
+export function useLocations(initialCountry?: string, initialState?: string) {
   const [states, setStates] = useState<State[]>([]);
   const [cities, setCities] = useState<City[]>([]);
-  const [selectedState, setSelectedState] = useState<string>('');
+  const [selectedState, setSelectedState] = useState<string>(initialState || '');
   const [isLoading, setIsLoading] = useState(true);
   const locale = useLocale();
-  const countryCode = locale === 'pt-BR' ? 'BR' : 'US';
+  const [countryCode, setCountryCode] = useState(initialCountry || (locale === 'pt-BR' ? 'BR' : 'US'));
+
+  useEffect(() => {
+    console.log('Fetching states for country:', countryCode);
+    console.log('Current selected state:', selectedState);
+  }, [countryCode, selectedState]);
 
   // Fetch states
   useEffect(() => {
+    let mounted = true;
+
     async function fetchStates() {
       try {
+        setIsLoading(true);
         const response = await fetch(`/api/locations?country=${countryCode}&locale=${locale}`);
-        console.log('response state', response);
         if (!response.ok) {
           console.error('States fetch failed:', await response.text());
           throw new Error('Failed to fetch states');
         }
         const data = await response.json();
-        setStates(data);
-        setIsLoading(false);
+        if (mounted) {
+          setStates(data);
+          if (!initialState || countryCode !== initialCountry) {
+            setSelectedState('');
+            setCities([]);
+          }
+        }
       } catch (error) {
         console.error('Error fetching states:', error);
-        setIsLoading(false);
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     }
 
     fetchStates();
-  }, [countryCode, locale]);
+
+    return () => {
+      mounted = false;
+    };
+  }, [countryCode, locale, initialCountry, initialState]);
 
   // Fetch cities when state is selected
   useEffect(() => {
+    let mounted = true;
+
     async function fetchCities() {
       if (!selectedState) {
         setCities([]);
@@ -53,18 +74,25 @@ export function useLocations() {
       try {
         setIsLoading(true);
         const response = await fetch(`/api/locations?state=${selectedState}&locale=${locale}`);
-        console.log('response city', response);
         if (!response.ok) throw new Error('Failed to fetch cities');
         const data = await response.json();
-        setCities(data);
-        setIsLoading(false);
+        if (mounted) {
+          setCities(data);
+        }
       } catch (error) {
         console.error('Error fetching cities:', error);
-        setIsLoading(false);
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     }
 
     fetchCities();
+
+    return () => {
+      mounted = false;
+    };
   }, [selectedState, locale]);
 
   return {
@@ -72,6 +100,8 @@ export function useLocations() {
     cities,
     selectedState,
     setSelectedState,
+    countryCode,
+    setCountryCode,
     isLoading
   };
 }

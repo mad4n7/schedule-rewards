@@ -100,6 +100,8 @@ export function BasicInfoForm({ initialData, onSubmit }: BasicInfoFormProps) {
             cityLabel={t('form.basicInfo.city')}
             statePlaceholder={t('form.basicInfo.statePlaceholder')}
             cityPlaceholder={t('form.basicInfo.cityPlaceholder')}
+            initialState={form.getValues('state')}
+            initialCity={form.getValues('city')}
           />
 
           <Button type="submit" className="w-full">

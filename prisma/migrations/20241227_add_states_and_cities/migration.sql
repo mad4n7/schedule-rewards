@@ -47,6 +47,7 @@ INSERT INTO "states" ("id", "name", "name_pt", "abbreviation", "country_code") V
 -- Insert US Cities
 INSERT INTO "cities" ("id", "name", "state_id") VALUES
 (gen_random_uuid(), 'Los Angeles', 'CA'),
+(gen_random_uuid(), 'Torrance', 'CA'),
 (gen_random_uuid(), 'San Francisco', 'CA'),
 (gen_random_uuid(), 'New York City', 'NY'),
 (gen_random_uuid(), 'Buffalo', 'NY'),
