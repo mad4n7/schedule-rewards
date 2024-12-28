@@ -76,6 +76,13 @@
         "schedule": "Schedule",
         "services": "Services"
       },
+      "error": {
+        "validation": "Please fix the validation errors before proceeding",
+        "failed": "Something went wrong. Please try again."
+      },
+      "success": {
+        "created": "Business created successfully!"
+      },
       "buttons": {
         "next": "Next",
         "back": "Back",

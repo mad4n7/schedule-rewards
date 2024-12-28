@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,11 +22,16 @@ interface OnboardingData {
   services?: BusinessOnboardingServices;
 }
 
+interface FormRef {
+  submit: () => Promise<boolean>;
+}
+
 export default function BusinessOnboarding() {
   const t = useTranslations('business.onboarding');
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<OnboardingStep>('basicInfo');
   const [data, setData] = useState<OnboardingData>({});
+  const formRef = useRef<FormRef>(null);
 
   const steps = [
     { id: 'basicInfo', label: t('steps.basicInfo') },
@@ -35,7 +40,13 @@ export default function BusinessOnboarding() {
     { id: 'services', label: t('steps.services') },
   ];
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const isValid = await formRef.current?.submit();
+    if (!isValid) {
+      toast.error(t('error.validation'));
+      return;
+    }
+
     const stepIndex = steps.findIndex(step => step.id === currentStep);
     if (stepIndex < steps.length - 1) {
       setCurrentStep(steps[stepIndex + 1].id as OnboardingStep);
@@ -50,6 +61,12 @@ export default function BusinessOnboarding() {
   };
 
   const handleSubmit = async () => {
+    const isValid = await formRef.current?.submit();
+    if (!isValid) {
+      toast.error(t('error.validation'));
+      return;
+    }
+
     try {
       const response = await fetch('/api/business', {
         method: 'POST',
@@ -85,40 +102,40 @@ export default function BusinessOnboarding() {
       case 'basicInfo':
         return (
           <BasicInfoForm
+            ref={formRef}
             initialData={data.basicInfo}
             onSubmit={(data) => {
               updateData({ basicInfo: data });
-              handleNext();
             }}
           />
         );
       case 'location':
         return (
           <LocationForm
+            ref={formRef}
             initialData={data.location}
             onSubmit={(data) => {
               updateData({ location: data });
-              handleNext();
             }}
           />
         );
       case 'schedule':
         return (
           <ScheduleForm
+            ref={formRef}
             initialData={data.schedule}
             onSubmit={(data) => {
               updateData({ schedule: data });
-              handleNext();
             }}
           />
         );
       case 'services':
         return (
           <ServicesForm
+            ref={formRef}
             initialData={data.services}
             onSubmit={(data) => {
               updateData({ services: data });
-              handleSubmit();
             }}
           />
         );

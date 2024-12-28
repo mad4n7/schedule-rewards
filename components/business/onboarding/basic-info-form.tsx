@@ -1,114 +1,138 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { useCategories } from '@/lib/hooks/use-categories';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { businessOnboardingBasicInfoSchema } from '@/lib/validations/business.schema';
-import type { BusinessOnboardingBasicInfo } from '@/lib/validations/business.schema';
-import { FormWrapper } from './form-wrapper';
-import { LocationSelect } from '@/components/location-select';
-import { useLocale } from 'next-intl';
+import { forwardRef, useImperativeHandle } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { useCategories } from "@/lib/hooks/use-categories";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { businessOnboardingBasicInfoSchema } from "@/lib/validations/business.schema";
+import type { BusinessOnboardingBasicInfo } from "@/lib/validations/business.schema";
+import { FormWrapper } from "./form-wrapper";
 
 interface BasicInfoFormProps {
   initialData?: BusinessOnboardingBasicInfo;
   onSubmit: (data: BusinessOnboardingBasicInfo) => void;
 }
 
-export function BasicInfoForm({ initialData, onSubmit }: BasicInfoFormProps) {
-  const t = useTranslations('business.onboarding');
-  const { categories, isLoading } = useCategories();
-  const locale = useLocale();
+export type BasicInfoFormRef = {
+  submit: () => Promise<boolean>;
+};
 
-  const form = useForm<BusinessOnboardingBasicInfo>({
-    resolver: zodResolver(businessOnboardingBasicInfoSchema),
-    defaultValues: initialData || {
-      name: '',
-      description: '',
-      category_id: '',
-      state: '',
-      city: ''
-    },
-  });
+export const BasicInfoForm = forwardRef<BasicInfoFormRef, BasicInfoFormProps>(
+  function BasicInfoForm({ initialData, onSubmit }, ref) {
+    const t = useTranslations("business.onboarding");
+    const { categories, isLoading } = useCategories();
 
-  return (
-    <FormWrapper>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('form.basicInfo.name')}</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    const form = useForm<BusinessOnboardingBasicInfo>({
+      resolver: zodResolver(businessOnboardingBasicInfoSchema),
+      defaultValues: initialData || {
+        name: "",
+        description: "",
+        category_id: "",
+      },
+    });
 
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('form.basicInfo.description')}</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    useImperativeHandle(ref, () => ({
+      submit: async () => {
+        const result = await form.trigger();
+        if (result) {
+          const data = form.getValues();
+          onSubmit(data);
+        }
+        return result;
+      },
+    }));
 
-          <FormField
-            control={form.control}
-            name="category_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('form.basicInfo.category')}</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+    return (
+      <FormWrapper>
+        <Form {...form}>
+          <form className="space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.basicInfo.name")}</FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t('form.basicInfo.categoryDescription')} />
-                    </SelectTrigger>
+                    <Input
+                      {...field}
+                      placeholder={t("form.basicInfo.nameDescription")}
+                      aria-describedby="name-description"
+                    />
                   </FormControl>
-                  <SelectContent>
-                    {categories?.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormMessage id="name-description" />
+                </FormItem>
+              )}
+            />
 
-          <LocationSelect
-            country={locale === 'pt-BR' ? 'BR' : 'US'}
-            onStateChange={(state) => form.setValue('state', state)}
-            onCityChange={(city) => form.setValue('city', city)}
-            stateLabel={t('form.basicInfo.state')}
-            cityLabel={t('form.basicInfo.city')}
-            statePlaceholder={t('form.basicInfo.statePlaceholder')}
-            cityPlaceholder={t('form.basicInfo.cityPlaceholder')}
-            initialState={form.getValues('state')}
-            initialCity={form.getValues('city')}
-          />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.basicInfo.description")}</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      placeholder={t("form.basicInfo.descriptionDescription")}
+                      aria-describedby="description-description"
+                    />
+                  </FormControl>
+                  <FormMessage id="description-description" />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit" className="w-full">
-            {t('buttons.next')}
-          </Button>
-        </form>
-      </Form>
-    </FormWrapper>
-  );
-}
+            <FormField
+              control={form.control}
+              name="category_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.basicInfo.category")}</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    disabled={isLoading}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={t("form.basicInfo.categoryDescription")}
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories?.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage id="category-description" />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </FormWrapper>
+    );
+  },
+);
