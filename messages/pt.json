@@ -1,8 +1,8 @@
 {
   "scheduleAndRewards": "Agenda & Recompensas",
-  "streamlineBusinessSchedulingAndRewardLoyalCustomers": "Otimize o agendamento do seu negócio e recompense seus clientes fiéis",
+  "streamlineBusinessSchedulingAndRewardLoyalCustomers": "Simplifique o agendamento do seu negócio e recompense seus clientes fiéis.",
   "welcomeBack": "Bem-vindo de volta",
-  "enterCredentialsToSignIn": "Digite suas credenciais para entrar na sua conta",
+  "enterCredentialsToSignIn": "Digite suas credenciais para entrar em sua conta",
   "createAccount": "Criar uma conta",
   "enterDetailsToCreateAccount": "Digite seus dados para criar sua conta",
   "byClickingContinueYouAgreeTo": "Ao clicar em continuar, você concorda com nossos",
@@ -24,13 +24,21 @@
       "rewards": "Recompensas",
       "businesses": "Negócios",
       "points": "Pontos"
-    }
+    },
+    "dashboard": "Painel",
+    "noBusinesses": "Você ainda não tem nenhum negócio",
+    "createBusiness": "Criar Negócio",
+    "manage": "Gerenciar Negócio"
   },
   "auth": {
     "signIn": "Entrar",
     "signUp": "Cadastrar",
     "signOut": "Sair",
-    "email": "Email",
+    "signedOut": "Desconectado",
+    "signOutDescription": "Você foi desconectado com sucesso da sua conta.",
+    "signOutSuccessMessage": "Obrigado por usar o Agenda & Recompensas. Esperamos vê-lo novamente em breve!",
+    "backToHome": "Voltar para o início",
+    "email": "E-mail",
     "password": "Senha",
     "confirmPassword": "Confirmar Senha",
     "name": "Nome",
@@ -38,13 +46,14 @@
     "or": "ou",
     "alreadyHaveAccount": "Já tem uma conta? Entre",
     "dontHaveAccount": "Não tem uma conta? Cadastre-se",
-    "forgotPassword": "Esqueceu sua senha?",
-    "invalidCredentials": "Email ou senha inválidos",
-    "registrationFailed": "Falha no cadastro. Por favor, tente novamente.",
-    "emailVerificationRequired": "Por favor, verifique seu endereço de email",
-    "emailVerificationSent": "Um email de verificação foi enviado para seu endereço de email",
-    "emailVerificationSuccess": "Seu email foi verificado com sucesso",
-    "loading": "Carregando...",
+    "forgotPassword": "Esqueceu a senha?",
+    "invalidCredentials": "E-mail ou senha inválidos",
+    "emailNotVerified": "Por favor, verifique seu endereço de e-mail antes de entrar. Verifique sua caixa de entrada para o link de verificação.",
+    "registrationFailed": "Falha no registro. Por favor, tente novamente.",
+    "verifyEmailTitle": "Verifique seu e-mail",
+    "verifyEmailDescription": "Enviamos um link de verificação",
+    "checkEmailInstructions": "Por favor, verifique seu e-mail para o link de verificação. Se você não o vir, verifique sua pasta de spam.",
+    "backToSignIn": "Voltar para Entrar",
     "emailVerification": {
       "subject": "Verifique seu endereço de e-mail",
       "greeting": "Olá {name}",
@@ -53,8 +62,11 @@
       "expires": "Este link expira em 24 horas.",
       "ignoreMessage": "Se você não criou uma conta, você pode ignorar este e-mail com segurança."
     },
+    "emailVerificationRequired": "Por favor, verifique seu endereço de e-mail",
+    "emailVerificationSent": "Um e-mail de verificação foi enviado para seu endereço de e-mail",
+    "emailVerificationSuccess": "Seu e-mail foi verificado com sucesso",
     "emailVerified": "E-mail verificado!",
-    "emailVerifiedMessage": "Seu e-mail foi verificado. Você já pode entrar na sua conta."
+    "emailVerifiedMessage": "Seu e-mail foi verificado com sucesso"
   },
   "profile": {
     "title": "Perfil",
@@ -81,7 +93,137 @@
     "save": "Salvar Negócio",
     "cancel": "Cancelar",
     "delete": "Excluir Negócio",
-    "confirmDelete": "Tem certeza que deseja excluir este negócio?"
+    "confirmDelete": "Tem certeza que deseja excluir este negócio?",
+    "Index": {
+      "title": "Bem-vindo ao Schedule & Rewards"
+    },
+    "Auth": {
+      "signIn": "Entrar",
+      "signUp": "Cadastrar",
+      "email": "Email",
+      "password": "Senha",
+      "confirmPassword": "Confirmar Senha",
+      "forgotPassword": "Esqueceu a senha?",
+      "noAccount": "Não tem uma conta?",
+      "hasAccount": "Já tem uma conta?",
+      "verifyEmail": "Verificar Email",
+      "verifyEmailSent": "Email de verificação enviado. Por favor, verifique sua caixa de entrada.",
+      "verifyEmailSuccess": "Email verificado com sucesso! Você já pode entrar.",
+      "invalidCredentials": "Email ou senha inválidos"
+    },
+    "Business": {
+      "create": "Criar Negócio",
+      "name": "Nome do Negócio",
+      "description": "Descrição do Negócio",
+      "choosePlan": "Escolha um Plano",
+      "plans": {
+        "title": "Planos de Assinatura",
+        "monthly": "Mensal",
+        "yearly": "Anual",
+        "features": "Recursos",
+        "selectPlan": "Selecionar Plano",
+        "currentPlan": "Plano Atual"
+      },
+      "payment": {
+        "title": "Pagamento",
+        "amount": "Valor",
+        "pixCode": "Código PIX",
+        "copyPixCode": "Copiar Código PIX",
+        "pixCodeCopied": "Código PIX copiado!",
+        "expiresAt": "Expira em",
+        "status": {
+          "pending": "Pendente",
+          "paid": "Pago",
+          "expired": "Expirado",
+          "cancelled": "Cancelado"
+        },
+        "instructions": {
+          "title": "Como pagar com PIX",
+          "step1": "1. Abra seu aplicativo bancário",
+          "step2": "2. Encontre a opção de pagamento PIX",
+          "step3": "3. Copie o código PIX",
+          "step4": "4. Cole o código no seu aplicativo bancário",
+          "step5": "5. Confirme o pagamento"
+        }
+      },
+      "success": {
+        "created": "Negócio criado com sucesso!",
+        "paymentReceived": "Pagamento recebido! Seu negócio está ativo."
+      },
+      "errors": {
+        "creation": "Erro ao criar negócio",
+        "payment": "Erro ao processar pagamento",
+        "planRequired": "Por favor, selecione um plano"
+      },
+      "onboarding": {
+        "title": "Criar Seu Negócio",
+        "description": "Vamos começar a configurar o perfil do seu negócio",
+        "steps": {
+          "basicInfo": "Informações Básicas",
+          "location": "Localização",
+          "schedule": "Horários",
+          "services": "Serviços"
+        },
+        "form": {
+          "basicInfo": {
+            "name": "Nome do Negócio",
+            "nameDescription": "O nome do seu negócio",
+            "description": "Descrição",
+            "descriptionDescription": "Uma breve descrição do seu negócio",
+            "category": "Categoria",
+            "categoryDescription": "Selecione a categoria que melhor descreve seu negócio",
+            "state": "Estado",
+            "statePlaceholder": "Selecione um estado",
+            "city": "Cidade",
+            "cityPlaceholder": "Selecione uma cidade"
+          },
+          "location": {
+            "address": "Endereço",
+            "addressDescription": "O endereço do seu negócio",
+            "city": "Cidade",
+            "cityDescription": "A cidade onde seu negócio está localizado",
+            "state": "Estado",
+            "stateDescription": "O estado onde seu negócio está localizado",
+            "zipCode": "CEP",
+            "zipCodeDescription": "O CEP do seu negócio",
+            "country": "País",
+            "countryDescription": "O país onde seu negócio está localizado"
+          },
+          "schedule": {
+            "days": {
+              "sunday": "Domingo",
+              "monday": "Segunda-feira",
+              "tuesday": "Terça-feira",
+              "wednesday": "Quarta-feira",
+              "thursday": "Quinta-feira",
+              "friday": "Sexta-feira",
+              "saturday": "Sábado"
+            },
+            "isClosed": "Fechado",
+            "startTime": "Horário de Abertura",
+            "endTime": "Horário de Fechamento",
+            "slotDuration": "Duração do Agendamento (minutos)",
+            "slotsPerInterval": "Agendamentos Simultâneos"
+          },
+          "services": {
+            "name": "Nome do Serviço",
+            "nameDescription": "O nome do serviço",
+            "description": "Descrição",
+            "descriptionDescription": "Uma breve descrição do serviço",
+            "price": "Preço",
+            "priceDescription": "O preço do serviço",
+            "duration": "Duração (minutos)",
+            "durationDescription": "Quanto tempo o serviço leva",
+            "addService": "Adicionar Serviço"
+          }
+        },
+        "buttons": {
+          "back": "Voltar",
+          "next": "Próximo",
+          "finish": "Finalizar"
+        }
+      }
+    }
   },
   "appointments": {
     "title": "Agendamentos",
@@ -122,5 +264,15 @@
     "edit": "Editar",
     "view": "Visualizar",
     "close": "Fechar"
+  },
+  "error": {
+    "title": "Algo deu errado!",
+    "description": "Ocorreu um erro ao processar sua solicitação.",
+    "tryAgain": "Tentar Novamente"
+  },
+  "notFound": {
+    "title": "Página Não Encontrada",
+    "description": "A página que você está procurando não existe.",
+    "backHome": "Voltar para o Início"
   }
 }
