@@ -40,16 +40,16 @@ export function DashboardNav() {
                     className={cn(
                       'group flex gap-x-3 rounded-md p-2 text-sm leading-6',
                       isActive
-                        ? 'bg-gray-50 text-primary font-semibold dark:bg-gray-800'
-                        : 'text-gray-700 hover:text-primary hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800'
+                        ? 'bg-gray-50 text-primary font-semibold dark:bg-gray-800 dark:text-primary'
+                        : 'text-gray-700 hover:text-white hover:bg-gray-50 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-800'
                     )}
                   >
                     <item.icon
                       className={cn(
                         'h-6 w-6 shrink-0',
                         isActive
-                          ? 'text-primary'
-                          : 'text-gray-400 group-hover:text-primary dark:text-gray-500'
+                          ? 'text-primary dark:text-primary'
+                          : 'text-gray-700 group-hover:text-white dark:text-gray-100 dark:group-hover:text-white'
                       )}
                       aria-hidden="true"
                     />
